@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-import Extrato from './Extrato';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Extrato from "./Extrato";
 
 export default class App extends Component {
   render() {
     return (
-      <Extrato/>
+      <div className="container">
+        <Extrato />
+      </div>
     );
   }
 }

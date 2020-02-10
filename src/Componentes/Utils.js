@@ -1,3 +1,14 @@
-let formatReal = (valor) => valor.toFixed(2).replace('.', ',');
+const formatReal = valor => valor.toFixed(2).replace(".", ",");
 
-export default { formatReal }
+const formatData = data => {
+  return data.toString();
+};
+
+const getMonthAbrev = function(data) {
+  var locale = "pt-br",
+  month = data.toLocaleString(locale, { month: "long" });
+
+  return month.toUpperCase().substring(0,3);
+};
+
+export { formatReal, formatData, getMonthAbrev };

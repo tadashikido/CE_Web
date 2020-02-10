@@ -1,0 +1,23 @@
+.row {
+  height: 100%;
+  min-height: 60px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.row > .data {
+  line-height: 60px;
+  position: relative;
+  display: inline-block;
+}
+
+.row > .data:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  margin-left: 20px;
+  width: 9999px;
+  height: 1px;
+  background: #f0f0f0;
+}

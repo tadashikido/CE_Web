@@ -1,55 +1,60 @@
 import React from "react";
-import { Table, Container } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 
-import Utils from "./Utils.js";
+import ExtratoLancamento from "./ExtratoLancamento";
+import ExtratoLancamentoData from "./ExtratoLancamentoData";
 
 import "react-datepicker/dist/react-datepicker.css";
+import "./Extrato.css";
 
 export default class Extrato extends React.Component {
   state = {
     carteiras: [],
-    parameter: {
-      startDate: new Date(),
-      endDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1)
-    },
+    startDate: new Date(),
+    endDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+    carteiraId: 0,
     saldoAnterior: 0,
-    lancamentos: [
-      {
-        Id: 11,
-        DataMovimento: "04/02/2020",
-        Origem: "Pronet",
-        Valor: 2250,
-        SaldoAcumulado: 0,
-        Tipo: "E"
-      },
-      {
-        Id: 12,
-        DataMovimento: "04/02/2020",
-        Origem: "Pronet",
-        Valor: 2250,
-        SaldoAcumulado: 0,
-        Tipo: "E"
-      },
-      {
-        Id: 13,
-        DataMovimento: "04/02/2020",
-        Origem: "Pronet",
-        Valor: 2250,
-        SaldoAcumulado: 0,
-        Tipo: "E"
-      }
-    ],
+    lancamentos: [],
     SaldoAcumulado: 0
   };
 
   handlerStartDate = date => {
     this.setState({
-      parameter: {
-        startDate: date
-      }
+      startDate: date
     });
   };
+
+  handlerEndDate = date => {
+    this.setState({
+      endDate: date
+    });
+  };
+
+  handlerChangeCarteira = value => {
+    this.setState({
+      carteiraId: value
+    });
+  };
+
+  handlerClick = () => {
+    this.carregaExtrato();
+  };
+
+  carregaExtrato() {
+    fetch(
+      "https://controleventuswebapi.azurewebsites.net/api/GetExtrato?schema=TST&idCarteira=26&dtInicio=" +
+        this.state.startDate.toISOString() +
+        "&dtFim=" +
+        this.state.endDate.toISOString()
+    )
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        this.setState({
+          lancamentos: res
+        });
+      });
+  }
 
   componentDidMount() {
     fetch(
@@ -61,46 +66,64 @@ export default class Extrato extends React.Component {
           carteiras: res
         });
       });
-  };
+
+    this.carregaExtrato();
+  }
 
   render() {
-    const { startDate, endDate } = this.state.parameter;
+    const { startDate, endDate, carteiraId } = this.state;
 
+    let data = new Date();
     return (
-      <Container>
-        {this.state.carteiras.map(carteira => (
-          <label key={carteira.id}>{carteira.descrCarteira}</label>
-        ))}
-        <DatePicker
-          selected={startDate}
-          onChange={this.handlerStartDate}
-          dateFormat="dd/MM/yyyy"
-        />
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <td>Registro</td>
-              <td>Data Movim</td>
-              <td>Origem/Destino</td>
-              <td>R$</td>
-              <td>Acuml R$</td>
-              <td>T.T.</td>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.lancamentos.map(lancamento => (
-              <tr key={lancamento.Id}>
-                <td>{lancamento.Id}</td>
-                <td>{lancamento.DataMovimento}</td>
-                <td>{lancamento.Origem}</td>
-                <td>{Utils.formatReal(lancamento.Valor)}</td>
-                <td>{lancamento.SaldoAcumulado}</td>
-                <td>{lancamento.Tipo}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Container>
+      <div className="extrato">
+        <div className="parameters">
+          <div class="control">
+            <label>Data Inicial</label>
+            <DatePicker
+              selected={startDate}
+              onChange={this.handlerStartDate}
+              dateFormat="dd/MM/yyyy"
+            />
+          </div>
+
+          <div class="control">
+            <label>Data Final</label>
+            <DatePicker
+              selected={endDate}
+              onChange={this.handlerEndDate}
+              dateFormat="dd/MM/yyyy"
+            />
+          </div>
+
+          <div class="control">
+            <label>Carteira</label>
+            <select>
+              {this.state.carteiras.map(carteira => (
+                <option
+                  key={carteira.id}
+                  value={carteiraId}
+                  onChange={this.handlerChangeCarteira}
+                >
+                  {carteira.descrCarteira}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button onClick={this.handlerClick}>Pesquisar</button>
+        </div>
+        <div className="lancamentos">
+        {this.state.lancamentos.map(lancamento => {
+          let component = [];
+          lancamento.carteiraId = 1;
+          lancamento.dtMovim !== data &&
+            component.push(<ExtratoLancamentoData data={lancamento.dtMovim}/>);
+
+          component.push(<ExtratoLancamento lancamento={lancamento} />);
+          data = lancamento.dtMovim;
+          return component;
+        })}
+      </div>
+      </div>
     );
   }
 }
