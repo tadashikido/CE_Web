@@ -31,7 +31,6 @@ export default class Extrato extends React.Component {
   };
 
   handlerChangeCarteira = event => {
-    console.log(event.target.value);
     this.setState({
       carteiraId: event.target.value
     });

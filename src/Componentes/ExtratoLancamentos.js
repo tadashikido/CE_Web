@@ -1,6 +1,6 @@
 import React from "react";
 
-import ExtratoLancamento from "./ExtratoLancamentoItem";
+import ExtratoLancamentoItem from "./ExtratoLancamentoItem";
 import ExtratoLancamentoData from "./ExtratoLancamentoData";
 
 import "./ExtratoLancamentos.css";
@@ -54,7 +54,7 @@ export default class ExtratoLancamentos extends React.Component {
             );
 
           component.push(
-            <ExtratoLancamento key={lancamento.id} lancamento={lancamento} />
+            <ExtratoLancamentoItem key={lancamento.id} lancamento={lancamento} />
           );
           data = lancamento.dtMovim;
           saldoAcumulado += lancamento.vlrTotal;
