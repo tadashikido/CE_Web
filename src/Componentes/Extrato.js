@@ -1,8 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 
-import ExtratoLancamento from "./ExtratoLancamento";
-import ExtratoLancamentoData from "./ExtratoLancamentoData";
+import ExtratoLancamentos from "./ExtratoLancamentos";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./Extrato.css";
@@ -10,12 +9,13 @@ import "./Extrato.css";
 export default class Extrato extends React.Component {
   state = {
     carteiras: [],
-    startDate: new Date(),
-    endDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+    startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+    endDate: new Date(),
     carteiraId: 0,
     saldoAnterior: 0,
     lancamentos: [],
-    SaldoAcumulado: 0
+    saldoAcumulado: 0,
+    isLoading: true
   };
 
   handlerStartDate = date => {
@@ -30,9 +30,10 @@ export default class Extrato extends React.Component {
     });
   };
 
-  handlerChangeCarteira = value => {
+  handlerChangeCarteira = event => {
+    console.log(event.target.value);
     this.setState({
-      carteiraId: value
+      carteiraId: event.target.value
     });
   };
 
@@ -41,17 +42,22 @@ export default class Extrato extends React.Component {
   };
 
   carregaExtrato() {
+    this.setState({
+      isLoading: true
+    });
     fetch(
-      "https://controleventuswebapi.azurewebsites.net/api/GetExtrato?schema=TST&idCarteira=26&dtInicio=" +
+      "https://controleventuswebapi.azurewebsites.net/api/GetExtrato?schema=TST&idCarteira=" +
+        this.state.carteiraId +
+        "&dtInicio=" +
         this.state.startDate.toISOString() +
         "&dtFim=" +
         this.state.endDate.toISOString()
     )
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         this.setState({
-          lancamentos: res
+          lancamentos: res,
+          isLoading: false
         });
       });
   }
@@ -71,39 +77,40 @@ export default class Extrato extends React.Component {
   }
 
   render() {
-    const { startDate, endDate, carteiraId } = this.state;
+    const { startDate, endDate, carteiraId, isLoading } = this.state;
 
-    let data = new Date();
     return (
       <div className="extrato">
         <div className="parameters">
-          <div class="control">
-            <label>Data Inicial</label>
+          <div className="control">
+            <label>Data Inicial: </label>
             <DatePicker
+              className="input"
               selected={startDate}
               onChange={this.handlerStartDate}
               dateFormat="dd/MM/yyyy"
             />
           </div>
 
-          <div class="control">
-            <label>Data Final</label>
+          <div className="control">
+            <label>Data Final: </label>
             <DatePicker
+              className="input"
               selected={endDate}
               onChange={this.handlerEndDate}
               dateFormat="dd/MM/yyyy"
             />
           </div>
 
-          <div class="control">
-            <label>Carteira</label>
-            <select>
+          <div className="control">
+            <label>Carteira: </label>
+            <select
+              className="input"
+              onChange={this.handlerChangeCarteira}
+              value={carteiraId}
+            >
               {this.state.carteiras.map(carteira => (
-                <option
-                  key={carteira.id}
-                  value={carteiraId}
-                  onChange={this.handlerChangeCarteira}
-                >
+                <option key={carteira.id} value={carteira.id}>
                   {carteira.descrCarteira}
                 </option>
               ))}
@@ -111,18 +118,10 @@ export default class Extrato extends React.Component {
           </div>
           <button onClick={this.handlerClick}>Pesquisar</button>
         </div>
-        <div className="lancamentos">
-        {this.state.lancamentos.map(lancamento => {
-          let component = [];
-          lancamento.carteiraId = 1;
-          lancamento.dtMovim !== data &&
-            component.push(<ExtratoLancamentoData data={lancamento.dtMovim}/>);
-
-          component.push(<ExtratoLancamento lancamento={lancamento} />);
-          data = lancamento.dtMovim;
-          return component;
-        })}
-      </div>
+        <ExtratoLancamentos
+          isLoading={isLoading}
+          lancamentos={this.state.lancamentos}
+        />
       </div>
     );
   }

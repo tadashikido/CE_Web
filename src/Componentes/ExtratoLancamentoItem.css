@@ -1,0 +1,24 @@
+.linhas {
+  display: flex;
+  justify-content: space-between;
+  line-height: 26px;
+}
+
+.linhas .origem {
+  font-size: 11px;
+  color: #3d3d3d;
+  text-transform: capitalize;
+}
+
+.linhas .valor {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.linhas .valor.positivo {
+  color: #62c4f5;
+}
+
+.linhas .valor.negativo {
+  color: #f57f7f;
+}

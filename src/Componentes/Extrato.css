@@ -1,17 +1,46 @@
 .extrato {
-    background: #ffffff;
-    margin: 5px;
-    padding: 10px 20px;
+  margin: 3px;
+  padding: 3px;
 }
 
 .extrato .parameters {
-
+  padding: 10px;
 }
 
 .extrato .parameters .control {
-
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+  font-weight: 500;
 }
 
-.extrato .lancamentos {
+.extrato .parameters .control > label {
+  margin-bottom: 2px;
+}
 
+.extrato .parameters .control .input {
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  color: #9c9c9c;
+  height: 18px;
+  background-color: transparent;
+}
+
+.extrato .parameters > button {
+  border: none;
+  height: 30px;
+  width: 100%;
+  margin-top: 8px;
+  background-color: #00adef;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.extrato .parameters > button:hover {
+  background-color: #56cfff;
+}
+
+.extrato .parameters .control .input:focus {
+  border: none;
 }

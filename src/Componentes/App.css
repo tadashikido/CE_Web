@@ -1,0 +1,7 @@
+.container {
+  max-width: 800px;
+  margin: 0px auto;
+  background-color: #fff;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+}
