@@ -11,7 +11,7 @@ export default class ExtratoLancamentoData extends React.Component {
     return (
       <div className="row">
         <div className="data">
-          <span className="dia">{new Date(data).getDay()}</span>
+          <span className="dia">{new Date(data).getDate()}</span>
           <span className="mes">{getMonthAbrev(new Date(data))}</span>
         </div>
         <div className="saldo">

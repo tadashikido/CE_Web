@@ -1,12 +1,13 @@
 import React from "react";
 
+import { formatReal } from "./Utils";
+
 import ExtratoLancamentoItem from "./ExtratoLancamentoItem";
 import ExtratoLancamentoData from "./ExtratoLancamentoData";
 
 import "./ExtratoLancamentos.css";
 
 export default class ExtratoLancamentos extends React.Component {
-  
   render() {
     const { isLoading, lancamentos, saldoAnterior } = this.props;
 
@@ -23,7 +24,7 @@ export default class ExtratoLancamentos extends React.Component {
         </div>
       );
 
-      if (!isLoading && lancamentos.length === 0)
+    if (!isLoading && lancamentos.length === 0)
       return (
         <div className="loading">
           <img
@@ -54,12 +55,16 @@ export default class ExtratoLancamentos extends React.Component {
             );
 
           component.push(
-            <ExtratoLancamentoItem key={lancamento.id} lancamento={lancamento} />
+            <ExtratoLancamentoItem
+              key={lancamento.id}
+              lancamento={lancamento}
+            />
           );
           data = lancamento.dtMovim;
           saldoAcumulado += lancamento.vlrTotal;
           return component;
         })}
+        <div className="saldoAcumulado">Saldo: {formatReal(saldoAcumulado)}</div>
       </div>
     );
   }
