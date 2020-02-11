@@ -1,10 +1,26 @@
+@media (min-width: 800px)
+{
+    .extrato .parameters,
+    .extrato .lancamentos {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 800px)
+{
+    .extrato .parameters,
+    .extrato .lancamentos {
+        padding: 10px;
+    }
+}
+
 .extrato {
   margin: 3px;
-  padding: 3px;
 }
 
 .extrato .parameters {
-  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 2px;
 }
 
 .extrato .parameters .control {

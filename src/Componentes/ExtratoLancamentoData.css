@@ -2,9 +2,12 @@
   padding-top: 15px;
   height: 100%;
   min-height: 60px;
-  display: block;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   overflow: hidden;
   white-space: nowrap;
+  margin-bottom: 4px;
 }
 
 .row > .data {
@@ -21,21 +24,36 @@
   top: 50%;
   margin-left: 50px;
   margin-right: 50px;
-  width: 80%;
+  width: 150px;
   height: 1px;
   background: #f0f0f0;
 }
 
 .row > .data .dia {
   font-weight: 700;
-  font-size: 15px;
+  font-size: 25px;
   text-align: center;
   width: 30px;
+  margin-bottom: 3px;
 }
 
 .row > .data .mes {
   font-weight: 700;
-  font-size: 15px;
+  font-size: 16px;
   text-align: center;
   width: 30px;
+}
+
+.row > .saldo {
+    margin: auto 0px;
+    color: #8a8a8a;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+@media (min-width: 900px) {
+    .extrato .parameters, 
+    .extrato .lancamentos {
+    padding: 20px;
+  }
 }

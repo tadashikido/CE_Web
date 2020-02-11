@@ -1,18 +1,33 @@
 .linhas {
-  display: flex;
-  justify-content: space-between;
-  line-height: 26px;
+  display: grid;
+  grid-template-columns: auto 80px;
+  grid-template-areas:
+    'nome valor'
+    'obs valor';
+    grid-gap: 3px;
+    margin-bottom: 8px;
 }
+
+.linhas .origem .nome { grid-area: nome; }
+.linhas .origem .obs { grid-area: obs; }
+.linhas .valor { grid-area: valor; }
 
 .linhas .origem {
   font-size: 11px;
   color: #3d3d3d;
-  text-transform: capitalize;
+  text-transform: capitalize !important;
+}
+
+.linhas .origem .obs {
+  font-size: 8px;
+  margin-top: 3px;
 }
 
 .linhas .valor {
   font-weight: 500;
   font-size: 12px;
+  margin: auto 0px;
+  text-align: right;
 }
 
 .linhas .valor.positivo {
