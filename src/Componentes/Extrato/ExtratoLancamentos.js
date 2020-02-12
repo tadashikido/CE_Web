@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formatReal } from "./Utils";
+import { formatReal } from "../Utils";
 
 import ExtratoLancamentoItem from "./ExtratoLancamentoItem";
 import ExtratoLancamentoData from "./ExtratoLancamentoData";
@@ -64,7 +64,9 @@ export default class ExtratoLancamentos extends React.Component {
           saldoAcumulado += lancamento.vlrTotal;
           return component;
         })}
-        <div className="saldoAcumulado">Saldo: {formatReal(saldoAcumulado)}</div>
+        <div className="saldoAcumulado">
+          Saldo: {formatReal(saldoAcumulado)}
+        </div>
       </div>
     );
   }

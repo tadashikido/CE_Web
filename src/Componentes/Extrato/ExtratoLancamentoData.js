@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formatReal, getMonthAbrev } from "./Utils";
+import { formatReal, getMonthAbrev } from "../Utils";
 
 import "./ExtratoLancamentoData.css";
 

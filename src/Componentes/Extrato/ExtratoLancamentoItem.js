@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formatReal } from "./Utils";
+import { formatReal } from "../Utils";
 
 import "./ExtratoLancamentoItem.css";
 
@@ -21,7 +21,11 @@ export default class ExtratoLancamento extends React.Component {
     return (
       <div className="linhas">
         <div className="origem">
-          <div className="nome">{lancamento.nomeCliente || lancamento.razaoSocial || "Transferência"} </div>
+          <div className="nome">
+            {lancamento.nomeCliente ||
+              lancamento.razaoSocial ||
+              "Transferência"}{" "}
+          </div>
           <div className="obs">{lancamento.obs}</div>
         </div>
         <div className={this.getClassNameValor(lancamento.vlrTotal)}>

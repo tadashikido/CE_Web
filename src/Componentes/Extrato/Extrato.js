@@ -56,7 +56,7 @@ export default class Extrato extends React.Component {
       .then(res => {
         this.setState({
           lancamentos: res,
-          isLoading: false,
+          isLoading: false
         });
       });
   }
@@ -76,7 +76,14 @@ export default class Extrato extends React.Component {
   }
 
   render() {
-    const { startDate, endDate, carteiraId, isLoading, saldoAnterior, lancamentos } = this.state;
+    const {
+      startDate,
+      endDate,
+      carteiraId,
+      isLoading,
+      saldoAnterior,
+      lancamentos
+    } = this.state;
 
     return (
       <div className="extrato">
