@@ -1,0 +1,41 @@
+.home {
+  margin: 3px;
+}
+
+@media (min-width: 800px) {
+  .saldos-tipo-carteira,
+  .saldos-carteira,
+  .ultimos-lancamentos {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 800px) {
+  .saldos-tipo-carteira,
+  .saldos-carteira,
+  .ultimos-lancamentos {
+    padding: 10px;
+  }
+}
+
+.saldos-tipo-carteira,
+.saldos-carteira,
+.ultimos-lancamentos {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 2px;
+}
+
+.saldos-carteira {
+  margin-top: 10px;
+}
+
+.ultimos-lancamentos {
+  margin-top: 10px;
+}
+
+.titulos {
+  margin: 0px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+}

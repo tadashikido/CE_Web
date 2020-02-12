@@ -24,7 +24,7 @@ export default class ExtratoLancamento extends React.Component {
           <div className="nome">
             {lancamento.nomeCliente ||
               lancamento.razaoSocial ||
-              "Transferência"}{" "}
+              "Transferência"}
           </div>
           <div className="obs">{lancamento.obs}</div>
         </div>

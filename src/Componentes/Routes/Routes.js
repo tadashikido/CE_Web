@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Login from "../Login";
-import Home from "../Home";
+import Login from "../Login/Login";
+import Home from "../Home/Home";
 import Extrato from "../Extrato/Extrato";
 import PrivateRoute from "./PrivateRoute";
 import Menu from "./Menu";
