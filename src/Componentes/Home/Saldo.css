@@ -1,20 +1,21 @@
 .saldos {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 25px;
-    color: #3d3d3d;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 25px;
+  color: #3d3d3d;
 }
 
 .descricao {
-    font-size: 11px;
-    color: #9c9c9c;
+  font-size: 11px;
+  color: #9c9c9c;
+  margin: auto 0px;
 }
 
 .saldo {
-    font-weight: 600;
-    font-size: 12px;
-    margin: auto 0px;
-    text-align: right;
-    color: #8a8a8a;
+  font-weight: 600;
+  font-size: 12px;
+  margin: auto 0px;
+  text-align: right;
+  color: #8a8a8a;
 }

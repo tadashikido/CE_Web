@@ -1,8 +1,7 @@
-@media (max-width: 800px)
-{
-    .menu {
-        margin-left: -8px;
-    }
+@media (max-width: 800px) {
+  .menu {
+    margin-left: -8px;
+  }
 }
 
 .menu {
@@ -18,22 +17,26 @@
 }
 
 .menu .menu-item {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
 }
 
-.menu .menu-item .icon{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin: 0 10px;
+.logout {
+  float: right;
+}
+
+.menu .menu-item .icon {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0 10px;
 }
 
 .menu .menu-item .icon .ico {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .menu .menu-item .icon > span {
-    font-size: 10px;
+  font-size: 10px;
 }

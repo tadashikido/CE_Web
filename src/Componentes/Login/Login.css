@@ -1,0 +1,36 @@
+.login-form {
+  margin: 0 auto;
+  margin-top: 120px;
+  max-width: 300px;
+}
+
+.login-form .form-control {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.login-form label {
+  margin-bottom: 3px;
+  font-size: 15px;
+}
+
+.login-form .form-control input {
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  color: #9c9c9c;
+  background-color: transparent;
+  font-size: 15px;
+}
+
+.login-form > button {
+  border: none;
+  height: 30px;
+  width: 100%;
+  margin-top: 15px;
+  background-color: #00adef;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}

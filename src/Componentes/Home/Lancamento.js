@@ -13,7 +13,8 @@ export default class Lancamento extends React.Component {
     return (
       <div className="saldos">
         <div className="descricao">
-          { lancamento.nomeCliente || lancamento.razaoSocial || "Transferência" }
+          {lancamento.nomeCliente || lancamento.razaoSocial || "TRANSFERÊNCIA"}{" "}
+          ({lancamento.obs})
         </div>
         <div className="saldo">R$ {formatReal(lancamento.vlrTotal)}</div>
       </div>

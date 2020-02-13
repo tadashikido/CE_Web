@@ -2,6 +2,7 @@ import React from "react";
 import DatePicker from "react-datepicker";
 
 import ExtratoLancamentos from "./ExtratoLancamentos";
+import { API_PATH } from "../api";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./Extrato.css";
@@ -45,25 +46,39 @@ export default class Extrato extends React.Component {
       isLoading: true
     });
     fetch(
-      "https://controleventuswebapi.azurewebsites.net/api/GetExtrato?schema=TST&idCarteira=" +
+      API_PATH +
+        "/api/GetSaldosInicial?schema=TADASHI&idCarteira=" +
         this.state.carteiraId +
-        "&dtInicio=" +
-        this.state.startDate.toISOString() +
-        "&dtFim=" +
-        this.state.endDate.toISOString()
+        "&data=" +
+        this.state.startDate.toISOString()
     )
       .then(res => res.json())
       .then(res => {
         this.setState({
-          lancamentos: res,
-          isLoading: false
+          saldoAnterior: res
         });
+        fetch(
+          API_PATH +
+            "/api/GetExtrato?schema=TADASHI&idCarteira=" +
+            this.state.carteiraId +
+            "&dtInicio=" +
+            this.state.startDate.toISOString() +
+            "&dtFim=" +
+            this.state.endDate.toISOString()
+        )
+          .then(res => res.json())
+          .then(res => {
+            this.setState({
+              lancamentos: res,
+              isLoading: false
+            });
+          });
       });
   }
 
   componentDidMount() {
     fetch(
-      "https://controleventuswebapi.azurewebsites.net/api/GetCarteiras?schema=TST"
+      API_PATH + "/api/GetCarteiras?schema=TADASHI&res=EXTRATOS&idUsuario=1"
     )
       .then(res => res.json())
       .then(res => {

@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Login from "../Login/Login";
+import Logout from "../Login/Logout";
 import Home from "../Home/Home";
 import Extrato from "../Extrato/Extrato";
 import PrivateRoute from "./PrivateRoute";
@@ -14,6 +15,7 @@ const Routes = () => (
       <Route path="/login" component={() => <Login />} />
       <PrivateRoute exact path="/" comp={() => <Home />} />
       <PrivateRoute path="/extrato" comp={() => <Extrato />} />
+      <PrivateRoute path="/logout" comp={() => <Logout />} />
     </Switch>
   </BrowserRouter>
 );
