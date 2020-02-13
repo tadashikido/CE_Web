@@ -7,17 +7,32 @@ import Home from "../Home/Home";
 import Extrato from "../Extrato/Extrato";
 import PrivateRoute from "./PrivateRoute";
 import Menu from "./Menu";
+import { isAuthenticated } from '../Login/auth'
 
-const Routes = () => (
-  <BrowserRouter>
-    <Menu />
-    <Switch>
-      <Route path="/login" component={() => <Login />} />
-      <PrivateRoute exact path="/" comp={() => <Home />} />
-      <PrivateRoute path="/extrato" comp={() => <Extrato />} />
-      <PrivateRoute path="/logout" comp={() => <Logout />} />
-    </Switch>
-  </BrowserRouter>
-);
 
-export default Routes;
+export default class Routes extends React.Component {
+
+  state = {
+    menuVisible: isAuthenticated()
+  }
+
+  setMenuVisible = visible => {
+    this.setState({
+      menuVisible: visible
+    })
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <Menu menuVisible={this.state.menuVisible}/>
+        <Switch>
+          <Route path="/login" component={() => <Login setMenuVisible={this.setMenuVisible}/>} />
+          <PrivateRoute exact path="/" comp={() => <Home />} />
+          <PrivateRoute path="/extrato" comp={() => <Extrato />} />
+          <PrivateRoute path="/logout" comp={() => <Logout setMenuVisible={this.setMenuVisible}/>} />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}

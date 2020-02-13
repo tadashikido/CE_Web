@@ -2,13 +2,16 @@ import React from "react";
 import { Home, AttachMoney, ExitToApp } from "@material-ui/icons";
 
 import { Link } from "react-router-dom";
-import { isAuthenticated } from "../Login/auth";
 
 import "./Menu.css";
 
 export default class Menu extends React.Component {
   render() {
+
+    const { menuVisible } = this.props;
+
     return (
+      menuVisible && (
       <div className="menu">
         <Link className="menu-item" to="/">
           <div className="icon">
@@ -30,6 +33,6 @@ export default class Menu extends React.Component {
           </div>
         </Link>
       </div>
-    );
+    ));
   }
 }

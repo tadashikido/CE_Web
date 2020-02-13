@@ -16,7 +16,8 @@ export default class Extrato extends React.Component {
     saldoAnterior: 0,
     lancamentos: [],
     saldoAcumulado: 0,
-    isLoading: true
+    isLoading: false,
+    error: false
   };
 
   handlerStartDate = date => {
@@ -43,7 +44,8 @@ export default class Extrato extends React.Component {
 
   carregaExtrato() {
     this.setState({
-      isLoading: true
+      isLoading: true,
+      error: false
     });
     fetch(
       API_PATH +
@@ -68,26 +70,41 @@ export default class Extrato extends React.Component {
         )
           .then(res => res.json())
           .then(res => {
-            this.setState({
-              lancamentos: res,
-              isLoading: false
-            });
+            if (!res.message)
+              this.setState({
+                lancamentos: res,
+                isLoading: false
+              });
           });
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+          error: true
+        });
       });
   }
 
-  componentDidMount() {
+  carregaCarteiras = () => {
     fetch(
       API_PATH + "/api/GetCarteiras?schema=TADASHI&res=EXTRATOS&idUsuario=1"
     )
       .then(res => res.json())
       .then(res => {
-        this.setState({
-          carteiras: res
-        });
-      });
+        if (!res.message)
+        {
+          this.setState({
+            carteiras: res,
+            carteiraId: this.state.carteiras.length > 0 ? this.state.carteiras[0] : 0
+          });
+        }
 
-    this.carregaExtrato();
+        this.carregaExtrato();
+      });
+  };
+
+  componentDidMount() {
+    this.carregaCarteiras();
   }
 
   render() {
@@ -96,6 +113,7 @@ export default class Extrato extends React.Component {
       endDate,
       carteiraId,
       isLoading,
+      error,
       saldoAnterior,
       lancamentos
     } = this.state;
@@ -141,6 +159,7 @@ export default class Extrato extends React.Component {
         </div>
         <ExtratoLancamentos
           isLoading={isLoading}
+          error={error}
           lancamentos={lancamentos}
           saldoAnterior={saldoAnterior}
         />

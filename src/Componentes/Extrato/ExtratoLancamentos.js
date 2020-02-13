@@ -9,7 +9,7 @@ import "./ExtratoLancamentos.css";
 
 export default class ExtratoLancamentos extends React.Component {
   render() {
-    const { isLoading, lancamentos, saldoAnterior } = this.props;
+    const { isLoading, error, lancamentos, saldoAnterior } = this.props;
 
     if (isLoading)
       return (
@@ -21,6 +21,19 @@ export default class ExtratoLancamentos extends React.Component {
           ></img>
           <br />
           <span>Carregando...</span>
+        </div>
+      );
+
+    if (error)
+      return (
+        <div className="loading">
+          <img
+            className="img"
+            alt="Erro ao processar"
+            src="https://cdn2.iconfinder.com/data/icons/oops-404-error/64/208_oops-face-emoji-emoticon-sad-512.png"
+          ></img>
+          <br />
+          <span>Erro ao processar dados, tente novamente!</span>
         </div>
       );
 

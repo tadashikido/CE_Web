@@ -2,6 +2,7 @@ import React from "react";
 
 import Saldo from "./Saldo";
 import Lancamento from "./Lancamento";
+import { getAuthentication } from "../Login/auth";
 import { API_PATH } from "../api";
 
 import "./Home.css";
@@ -17,6 +18,8 @@ export default class Home extends React.Component {
     fetch(API_PATH + "/api/GetSaldosTiposCarteira?schema=TADASHI&idUsuario=1")
       .then(res => res.json())
       .then(res => {
+        console.log(res.message)
+        if (!res.message)
         this.setState({
           saldosTipoCarteira: res
         });
@@ -24,12 +27,17 @@ export default class Home extends React.Component {
   };
 
   carregarSaldosCarteira = () => {
-    fetch(API_PATH + "/api/GetSaldosCarteira?schema=TADASHI&idUsuario=1")
+    fetch(API_PATH + "/api/GetSaldosCarteira", {
+      method: "POST",
+      headers: getAuthentication()
+    })
       .then(res => res.json())
       .then(res => {
-        this.setState({
-          saldosCarteira: res
-        });
+        console.log(res.message)
+        if (!res.message)
+          this.setState({
+            saldosCarteira: res
+          });
       });
   };
 
@@ -37,10 +45,11 @@ export default class Home extends React.Component {
     fetch(API_PATH + "/api/GetUltimosLancamentos?schema=TADASHI&idUsuario=1")
       .then(res => res.json())
       .then(res => {
-        this.setState({
-          ultimosLancamentos: res
-        });
-      });
+        if (!res.message)
+          this.setState({
+            ultimosLancamentos: res
+          });
+      })
   };
 
   componentDidMount() {

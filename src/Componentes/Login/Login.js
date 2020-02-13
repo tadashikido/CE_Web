@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 import { API_PATH } from "../api";
-import { isAuthenticated, saveAccessToken } from "./auth";
+import { isAuthenticated, saveAccessToken, saveAuthentication } from "./auth";
 
 import "./Login.css";
 
@@ -32,6 +32,9 @@ export default class Login extends React.Component {
   };
 
   handlerClick = e => {
+
+    const { setMenuVisible } = this.props;
+
     e.preventDefault();
     // fetch(
     //   API_PATH +
@@ -54,10 +57,17 @@ export default class Login extends React.Component {
     //     saldosTipoCarteira: res
     //   });
     // });
-    saveAccessToken("a");
-    this.setState({
-      password: ""
+    const userId = 1;
+
+    saveAuthentication({
+      user: this.state.user,
+      password: this.state.password,
+      schema: this.state.esquema,
+      userId: userId
     });
+
+    saveAccessToken("a");
+    setMenuVisible(true);
   };
 
   render() {

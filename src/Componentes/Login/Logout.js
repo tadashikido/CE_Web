@@ -1,13 +1,15 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 
-import { removeAccessToken } from "./auth";
+import { clearStorage } from "./auth";
 
 import "./Login.css";
 
 export default class Login extends React.Component {
   componentDidMount = () => {
-    removeAccessToken();
+    const { setMenuVisible } = this.props;
+    setMenuVisible(false);
+    clearStorage();
   };
 
   render() {
