@@ -19,6 +19,30 @@ export default class NewLancamento extends React.Component {
     carteiraId: 0
   };
 
+  handlerReceitaClick = () => {
+    this.setState({
+      receita: true,
+      despesa: false,
+      transferencia: false
+    });
+  };
+
+  handlerDespesaClick = () => {
+    this.setState({
+      receita: false,
+      despesa: true,
+      transferencia: false
+    });
+  };
+
+  handlerTransferenciaClick = () => {
+    this.setState({
+      receita: false,
+      despesa: false,
+      transferencia: true
+    });
+  };
+
   render() {
     const { receita, despesa, transferencia } = this.state;
 
@@ -27,9 +51,18 @@ export default class NewLancamento extends React.Component {
         <div className="controle">
           <span>Selecione:</span>
           <div className="buttons">
-            <button className="receita">receita</button>
-            <button className="despesa">despesa</button>
-            <button className="transferencia">transferencia</button>
+            <button className="receita" onClick={this.handlerReceitaClick}>
+              R
+            </button>
+            <button className="despesa" onClick={this.handlerDespesaClick}>
+              D
+            </button>
+            <button
+              className="transferencia"
+              onClick={this.handlerTransferenciaClick}
+            >
+              T
+            </button>
           </div>
         </div>
         <div className="tipo-lancamento">

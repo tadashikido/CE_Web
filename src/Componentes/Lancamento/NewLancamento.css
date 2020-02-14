@@ -33,8 +33,7 @@
 }
 
 .new-lancamento .controle span {
-  margin: 0px;
-  margin-bottom: 10px;
+  margin: auto 0px;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 600;
@@ -45,20 +44,37 @@
 }
 
 .new-lancamento .controle .buttons button {
-  height: 25px;
   margin: 5px;
-  color: white;
+  color: black;
   background: transparent;
+  padding: 8px;
+  width: 30px;
+  height: 30px;
 }
 
 .new-lancamento .controle .buttons button.receita {
   border: 2px solid #2ecc71;
 }
 
+.new-lancamento .controle .buttons button.receita:hover {
+  background: #2ecc71;
+  color: white;
+}
+
 .new-lancamento .controle .buttons button.despesa {
   border: 2px solid #d62c1a;
 }
 
+.new-lancamento .controle .buttons button.despesa:hover {
+  background: #d62c1a;
+  color: white;
+}
+
 .new-lancamento .controle .buttons button.transferencia {
   border: 2px solid #3498db;
+}
+
+.new-lancamento .controle .buttons button.transferencia:hover {
+  background: #3498db;
+  color: white;
 }
