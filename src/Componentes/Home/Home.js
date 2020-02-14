@@ -109,6 +109,7 @@ export default class Home extends React.Component {
             <h2>Saldo por Tipos de Carteira</h2>
             {loadingSaldosTiposCarteira && (
               <img
+                alt="carregando"
                 className="load"
                 src="https://thumbs.gfycat.com/GrimyPlainKakarikis-size_restricted.gif"
               />
@@ -134,6 +135,7 @@ export default class Home extends React.Component {
             <h2 className="titulos">Saldo por Carteiras</h2>
             {loadingSaldosCarteiras && (
               <img
+                alt="carregando"
                 className="load"
                 src="https://thumbs.gfycat.com/GrimyPlainKakarikis-size_restricted.gif"
               />
@@ -159,6 +161,7 @@ export default class Home extends React.Component {
             <h2 className="titulos">Últimos Lançamentos</h2>
             {loadingLancamentos && (
               <img
+                alt="carregando"
                 className="load"
                 src="https://thumbs.gfycat.com/GrimyPlainKakarikis-size_restricted.gif"
               />
