@@ -15,7 +15,7 @@ export default class ExtratoLancamentoData extends React.Component {
           <span className="mes">{getMonthAbrev(new Date(data))}</span>
         </div>
         <div className="saldo">
-          <span>{formatReal(saldoAcumulado)}</span>
+          <span>R$ {formatReal(saldoAcumulado)}</span>
         </div>
       </div>
     );

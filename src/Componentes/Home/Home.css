@@ -33,9 +33,20 @@
   margin-top: 10px;
 }
 
-.titulos {
+.titulo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.titulo h2 {
   margin: 0px;
   margin-bottom: 10px;
   font-size: 14px;
   text-transform: uppercase;
+}
+
+.titulo .load {
+  width: 60px;
+  margin-top: -10px;
 }

@@ -1,18 +1,25 @@
 .login-form {
   margin: 0 auto;
-  padding-top: 120px;
+  padding: 80px 0px;
   max-width: 300px;
+  margin-top: -70px;
 }
 
 .login-form .form-control {
   display: flex;
   flex-direction: column;
   margin-top: 15px;
+  text-align: center;
 }
 
 .login-form label {
   margin-bottom: 3px;
   font-size: 15px;
+}
+
+.login-form label .login-icon {
+  margin-bottom: -4px;
+  margin-right: 8px;
 }
 
 .login-form .form-control input {
@@ -22,6 +29,12 @@
   color: #9c9c9c;
   background-color: transparent;
   font-size: 15px;
+  padding: 3px;
+  text-align: center;
+}
+
+.upper {
+  text-transform: uppercase;
 }
 
 .login-form > button {
@@ -33,4 +46,10 @@
   color: white;
   font-weight: 600;
   cursor: pointer;
+}
+
+.erro {
+  color: red;
+  text-align: center;
+  padding-top: 10px;
 }

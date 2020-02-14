@@ -1,8 +1,10 @@
 import React from "react";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
+import ptbr from "date-fns/locale/pt-BR";
 
 import ExtratoLancamentos from "./ExtratoLancamentos";
 import { API_PATH } from "../api";
+import { getAuthentication } from "../Login/auth";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./Extrato.css";
@@ -49,10 +51,14 @@ export default class Extrato extends React.Component {
     });
     fetch(
       API_PATH +
-        "/api/GetSaldosInicial?schema=TADASHI&idCarteira=" +
+        "/api/GetSaldosInicial?idCarteira=" +
         this.state.carteiraId +
         "&data=" +
-        this.state.startDate.toISOString()
+        this.state.startDate.toISOString(),
+      {
+        method: "POST",
+        headers: getAuthentication()
+      }
     )
       .then(res => res.json())
       .then(res => {
@@ -61,12 +67,16 @@ export default class Extrato extends React.Component {
         });
         fetch(
           API_PATH +
-            "/api/GetExtrato?schema=TADASHI&idCarteira=" +
+            "/api/GetExtrato?idCarteira=" +
             this.state.carteiraId +
             "&dtInicio=" +
             this.state.startDate.toISOString() +
             "&dtFim=" +
-            this.state.endDate.toISOString()
+            this.state.endDate.toISOString(),
+          {
+            method: "POST",
+            headers: getAuthentication()
+          }
         )
           .then(res => res.json())
           .then(res => {
@@ -86,16 +96,16 @@ export default class Extrato extends React.Component {
   }
 
   carregaCarteiras = () => {
-    fetch(
-      API_PATH + "/api/GetCarteiras?schema=TADASHI&res=EXTRATOS&idUsuario=1"
-    )
+    fetch(API_PATH + "/api/GetCarteiras?res=EXTRATOS", {
+      method: "POST",
+      headers: getAuthentication()
+    })
       .then(res => res.json())
       .then(res => {
-        if (!res.message)
-        {
+        if (!res.message) {
           this.setState({
             carteiras: res,
-            carteiraId: this.state.carteiras.length > 0 ? this.state.carteiras[0] : 0
+            carteiraId: res.length > 0 ? res[0].id : 0
           });
         }
 
@@ -118,6 +128,8 @@ export default class Extrato extends React.Component {
       lancamentos
     } = this.state;
 
+    registerLocale("pt-BR", ptbr);
+
     return (
       <div className="extrato">
         <div className="parameters">
@@ -125,6 +137,7 @@ export default class Extrato extends React.Component {
             <label>Data Inicial: </label>
             <DatePicker
               className="input"
+              locale="pt-BR"
               selected={startDate}
               onChange={this.handlerStartDate}
               dateFormat="dd/MM/yyyy"
@@ -135,6 +148,7 @@ export default class Extrato extends React.Component {
             <label>Data Final: </label>
             <DatePicker
               className="input"
+              locale="pt-BR"
               selected={endDate}
               onChange={this.handlerEndDate}
               dateFormat="dd/MM/yyyy"

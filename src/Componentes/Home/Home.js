@@ -11,38 +11,67 @@ export default class Home extends React.Component {
   state = {
     saldosCarteira: [],
     saldosTipoCarteira: [],
-    ultimosLancamentos: []
+    ultimosLancamentos: [],
+    loadingSaldosCarteiras: false,
+    loadingSaldosTiposCarteira: false,
+    loadingLancamentos: false
   };
 
   carregarSaldosTipoCarteira = () => {
-    fetch(API_PATH + "/api/GetSaldosTiposCarteira?schema=TADASHI&idUsuario=1")
+    this.setState({
+      loadingSaldosTiposCarteira: true
+    });
+
+    fetch(API_PATH + "/api/GetSaldosTiposCarteira", {
+      method: "POST",
+      headers: getAuthentication()
+    })
       .then(res => res.json())
       .then(res => {
-        console.log(res.message)
         if (!res.message)
+          this.setState({
+            saldosTipoCarteira: res
+          });
+      })
+      .finally(() => {
         this.setState({
-          saldosTipoCarteira: res
+          loadingSaldosTiposCarteira: false
         });
       });
   };
 
   carregarSaldosCarteira = () => {
+    this.setState({
+      loadingSaldosCarteiras: true
+    });
+
     fetch(API_PATH + "/api/GetSaldosCarteira", {
       method: "POST",
       headers: getAuthentication()
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res.message)
         if (!res.message)
           this.setState({
             saldosCarteira: res
           });
+      })
+      .finally(() => {
+        this.setState({
+          loadingSaldosCarteiras: false
+        });
       });
   };
 
   carregarUltimosLancamentos = () => {
-    fetch(API_PATH + "/api/GetUltimosLancamentos?schema=TADASHI&idUsuario=1")
+    this.setState({
+      loadingLancamentos: true
+    });
+
+    fetch(API_PATH + "/api/GetUltimosLancamentos", {
+      method: "POST",
+      headers: getAuthentication()
+    })
       .then(res => res.json())
       .then(res => {
         if (!res.message)
@@ -50,6 +79,11 @@ export default class Home extends React.Component {
             ultimosLancamentos: res
           });
       })
+      .finally(() => {
+        this.setState({
+          loadingLancamentos: false
+        });
+      });
   };
 
   componentDidMount() {
@@ -62,13 +96,24 @@ export default class Home extends React.Component {
     const {
       saldosTipoCarteira,
       saldosCarteira,
-      ultimosLancamentos
+      ultimosLancamentos,
+      loadingLancamentos,
+      loadingSaldosCarteiras,
+      loadingSaldosTiposCarteira
     } = this.state;
 
     return (
       <div className="home">
         <div className="saldos-tipo-carteira">
-          <h2 className="titulos">Saldo por Tipos de Carteira</h2>
+          <div className="titulo">
+            <h2>Saldo por Tipos de Carteira</h2>
+            {loadingSaldosTiposCarteira && (
+              <img
+                className="load"
+                src="https://thumbs.gfycat.com/GrimyPlainKakarikis-size_restricted.gif"
+              />
+            )}
+          </div>
           {saldosTipoCarteira.map((carteira, i) => (
             <Saldo
               key={carteira.id}
@@ -85,7 +130,15 @@ export default class Home extends React.Component {
           />
         </div>
         <div className="saldos-carteira">
-          <h2 className="titulos">Saldo por Carteiras</h2>
+          <div className="titulo">
+            <h2 className="titulos">Saldo por Carteiras</h2>
+            {loadingSaldosCarteiras && (
+              <img
+                className="load"
+                src="https://thumbs.gfycat.com/GrimyPlainKakarikis-size_restricted.gif"
+              />
+            )}
+          </div>
           {saldosCarteira.map((carteira, i) => (
             <Saldo
               key={carteira.id}
@@ -102,7 +155,15 @@ export default class Home extends React.Component {
           />
         </div>
         <div className="ultimos-lancamentos">
-          <h2 className="titulos">Últimos Lançamentos</h2>
+          <div className="titulo">
+            <h2 className="titulos">Últimos Lançamentos</h2>
+            {loadingLancamentos && (
+              <img
+                className="load"
+                src="https://thumbs.gfycat.com/GrimyPlainKakarikis-size_restricted.gif"
+              />
+            )}
+          </div>
           {ultimosLancamentos.map(lancamento => (
             <Lancamento key={lancamento.id} lancamento={lancamento} />
           ))}

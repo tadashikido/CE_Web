@@ -1,5 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import { Person, Lock, AccountTree } from "@material-ui/icons";
+import md5 from "md5";
 
 import { API_PATH } from "../api";
 import { isAuthenticated, saveAccessToken, saveAuthentication } from "./auth";
@@ -10,7 +12,8 @@ export default class Login extends React.Component {
   state = {
     user: "",
     password: "",
-    esquema: ""
+    esquema: "",
+    erro: ""
   };
 
   handlerChangeUser = e => {
@@ -32,56 +35,90 @@ export default class Login extends React.Component {
   };
 
   handlerClick = e => {
-
     const { setMenuVisible } = this.props;
 
     e.preventDefault();
-    // fetch(
-    //   API_PATH +
-    //     "/api/Conectar" +
-    //     {
-    //       method: "POST",
-    //       body: JSON.stringfy({
-    //         schema: this.state.esquema,
-    //         user: this.state.user,
-    //         password: this.state.password
-    //       }),
-    //       headers: {
-    //         "Content-Type": "application/json"
-    //       }
-    //     }
-    // )
-    // .then(res => res.json())
-    // .then(res => {
-    //   this.setState({
-    //     saldosTipoCarteira: res
-    //   });
-    // });
-    const userId = 1;
 
-    saveAuthentication({
-      user: this.state.user,
-      password: this.state.password,
-      schema: this.state.esquema,
-      userId: userId
+    this.setState({
+      erro: ""
     });
 
-    saveAccessToken("a");
-    setMenuVisible(true);
+    if (!this.state.user) {
+      this.setState({
+        erro: "Digite seu usuário!"
+      });
+      return;
+    }
+
+    if (!this.state.password) {
+      this.setState({
+        erro: "Digite sua senha!"
+      });
+      return;
+    }
+
+    if (!this.state.esquema) {
+      this.setState({
+        erro: "Digite o esquema!"
+      });
+      return;
+    }
+
+    fetch(
+      API_PATH +
+        "/api/Autenticar?user=" +
+        this.state.user +
+        "&password=" +
+        md5(this.state.password) +
+        "&schema=" +
+        this.state.esquema
+    )
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        if (!res)
+          this.setState({
+            erro: "Usuário ou senha inválido!"
+          });
+        else if (res.message) {
+          this.setState({
+            erro: "Erro ao conetar ao servidor!"
+          });
+        } else {
+          const userId = res.id;
+
+          saveAuthentication({
+            user: this.state.user,
+            password: md5(this.state.password),
+            schema: this.state.esquema,
+            userId: userId
+          });
+
+          saveAccessToken(res.id);
+          setMenuVisible(true);
+        }
+      });
   };
 
   render() {
-    const { user, password, esquema } = this.state;
+    const { user, password, esquema, erro } = this.state;
+
     return isAuthenticated() ? (
       <Redirect to={{ pathname: "/" }} />
     ) : (
       <form className="login-form">
         <div className="form-control">
-          <label>Usuário</label>
+          <label>
+            <Person className="login-icon" />
+            Usuário
+          </label>
           <input type="text" value={user} onChange={this.handlerChangeUser} />
         </div>
         <div className="form-control">
-          <label>Senha</label>
+          <label>
+            <Lock className="login-icon" />
+            Senha
+          </label>
           <input
             type="password"
             value={password}
@@ -89,13 +126,18 @@ export default class Login extends React.Component {
           />
         </div>
         <div className="form-control">
-          <label>Esquema</label>
+          <label>
+            <AccountTree className="login-icon" />
+            Esquema
+          </label>
           <input
+            className="upper"
             type="text"
             value={esquema}
             onChange={this.handlerChangeEsquema}
           />
         </div>
+        <div className="erro">{erro}</div>
         <button onClick={this.handlerClick}>Conectar</button>
       </form>
     );
