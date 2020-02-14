@@ -1,0 +1,38 @@
+.movimento {
+    display: grid;
+    grid-template-columns: auto 80px;
+    grid-template-areas:
+      'nome valor'
+      'obs valor';
+      grid-gap: 3px;
+      margin-bottom: 8px;
+      transition: all .3s;
+      cursor: pointer;
+  }
+  
+  .movimento .descricao .nome { grid-area: nome; }
+  .movimento .descricao .obs { grid-area: obs; }
+  .movimento .valor { grid-area: valor; }
+  
+  .movimento .descricao {
+    font-size: 11px;
+    color: #9c9c9c;
+    margin: auto 0px;
+  }
+  
+  .movimento .descricao .nome {
+    color: #4a4a4a;
+  }
+  
+  .movimento .descricao .obs {
+    font-size: 8px;
+    margin-top: 2px;
+  }
+  
+  .movimento .valor {
+    font-weight: 600;
+    font-size: 12px;
+    margin: auto 0px;
+    text-align: right;
+    color: #8a8a8a;
+  }

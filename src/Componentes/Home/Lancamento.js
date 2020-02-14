@@ -11,12 +11,16 @@ export default class Lancamento extends React.Component {
     const lancamento = this.props.lancamento;
 
     return (
-      <div className="saldos">
+      <div className="movimento">
         <div className="descricao">
-          {lancamento.nomeCliente || lancamento.razaoSocial || "TRANSFERÊNCIA"}{" "}
-          ({lancamento.obs})
+        <div className="nome">
+            {lancamento.nomeCliente ||
+              lancamento.razaoSocial ||
+              "TRANSFERÊNCIA"}
+          </div>
+          <div className="obs">{lancamento.obs}</div>
         </div>
-        <div className="saldo">R$ {formatReal(lancamento.vlrTotal)}</div>
+        <div className="valor">R$ {formatReal(lancamento.vlrTotal)}</div>
       </div>
     );
   }
