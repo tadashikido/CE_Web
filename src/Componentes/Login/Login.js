@@ -13,7 +13,8 @@ export default class Login extends React.Component {
     user: "",
     password: "",
     esquema: "",
-    erro: ""
+    erro: "",
+    processando: false
   };
 
   handlerChangeUser = e => {
@@ -40,7 +41,8 @@ export default class Login extends React.Component {
     e.preventDefault();
 
     this.setState({
-      erro: ""
+      erro: "",
+      processando: true
     });
 
     if (!this.state.user) {
@@ -75,7 +77,6 @@ export default class Login extends React.Component {
     )
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         if (!res)
           this.setState({
             erro: "Usuário ou senha inválido!"
@@ -97,6 +98,16 @@ export default class Login extends React.Component {
           saveAccessToken(res.id);
           setMenuVisible(true);
         }
+      })
+      .catch(() => {
+        this.setState({
+          erro: "Erro ao conetar ao servidor!"
+        });
+      })
+      .finally(() => {
+        this.setState({
+          processando: false
+        });
       });
   };
 
