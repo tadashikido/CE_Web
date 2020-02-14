@@ -50,3 +50,8 @@
   width: 60px;
   margin-top: -10px;
 }
+
+.titulo .error {
+  width: 30px;
+  cursor: pointer;
+}
