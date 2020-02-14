@@ -26,7 +26,7 @@ export default class ExtratoLancamentos extends React.Component {
 
     if (error)
       return (
-        <div className="loading">
+        <div className="error">
           <img
             className="img"
             alt="Erro ao processar"

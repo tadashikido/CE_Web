@@ -44,7 +44,7 @@ export default class SaldoTiposCarteiraList extends React.Component {
     this.carregarSaldosTipoCarteira();
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.carregarSaldosTipoCarteira();
   }
 

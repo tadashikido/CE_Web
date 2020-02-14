@@ -45,7 +45,7 @@ export default class UltimosLancamentos extends React.Component {
     this.carregarUltimosLancamentos();
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.carregarUltimosLancamentos();
   }
 

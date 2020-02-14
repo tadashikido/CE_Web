@@ -82,15 +82,18 @@ export default class Extrato extends React.Component {
           .then(res => {
             if (!res.message)
               this.setState({
-                lancamentos: res,
-                isLoading: false
+                lancamentos: res
               });
           });
       })
       .catch(() => {
         this.setState({
-          isLoading: false,
           error: true
+        });
+      })
+      .finally(() => {
+        this.setState({
+          isLoading: false
         });
       });
   }
@@ -110,10 +113,15 @@ export default class Extrato extends React.Component {
         }
 
         this.carregaExtrato();
+      })
+      .catch(() => {
+        this.setState({
+          error: true
+        });
       });
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.carregaCarteiras();
   }
 
