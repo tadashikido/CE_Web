@@ -1,6 +1,8 @@
 import React from "react";
 import { AttachMoney, MoneyOff, CompareArrows } from "@material-ui/icons";
 
+import { API_PATH } from "../api";
+import { getAuthentication } from "../Login/auth";
 import NewReceita from "./NewReceita";
 import NewDespesa from "./NewDespesa";
 import NewTransferencia from "./NewTransferencia";
