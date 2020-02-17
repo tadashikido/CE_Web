@@ -1,4 +1,5 @@
 import React from "react";
+import { AttachMoney, MoneyOff, CompareArrows } from "@material-ui/icons";
 
 import NewReceita from "./NewReceita";
 import NewDespesa from "./NewDespesa";
@@ -11,77 +12,168 @@ export default class NewLancamento extends React.Component {
     receita: false,
     despesa: true,
     transferencia: false,
+    active: "despesa",
     carteiras: [],
-    servicos: [],
-    contasContabeis: [],
     valor: 0,
     dataMovimento: new Date(),
-    carteiraId: 0
+    carteiraId: 0,
+    error: false
   };
 
   handlerReceitaClick = () => {
     this.setState({
       receita: true,
       despesa: false,
-      transferencia: false
+      transferencia: false,
+      active: "receita",
+      error: false
     });
+
+    fetch(API_PATH + "/api/GetCarteiras?res=ENTRADAS", {
+      method: "POST",
+      headers: getAuthentication()
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (!res.message) {
+          this.setState({
+            carteiras: res,
+            carteiraId: res.length > 0 ? res[0].id : 0
+          });
+        }
+      })
+      .catch(() => {
+        this.setState({
+          error: true
+        });
+      });
   };
 
   handlerDespesaClick = () => {
     this.setState({
       receita: false,
       despesa: true,
-      transferencia: false
+      transferencia: false,
+      active: "despesa",
+      error: false
     });
+
+    fetch(API_PATH + "/api/GetCarteiras?res=SAIDAS", {
+      method: "POST",
+      headers: getAuthentication()
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (!res.message) {
+          this.setState({
+            carteiras: res,
+            carteiraId: res.length > 0 ? res[0].id : 0
+          });
+        }
+      })
+      .catch(() => {
+        this.setState({
+          error: true
+        });
+      });
   };
 
   handlerTransferenciaClick = () => {
     this.setState({
       receita: false,
       despesa: false,
-      transferencia: true
+      transferencia: true,
+      active: "transferencia",
+      error: false
     });
+
+    fetch(API_PATH + "/api/GetCarteiras?res=TRANSFER", {
+      method: "POST",
+      headers: getAuthentication()
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (!res.message) {
+          this.setState({
+            carteiras: res,
+            carteiraId: res.length > 0 ? res[0].id : 0
+          });
+        }
+      })
+      .catch(() => {
+        this.setState({
+          error: true
+        });
+      });
   };
 
   render() {
-    const { receita, despesa, transferencia } = this.state;
+    const { receita, despesa, transferencia, active } = this.state;
 
     return (
       <div className="new-lancamento">
         <div className="controle">
           <span>Selecione:</span>
           <div className="buttons">
-            <button className="receita" onClick={this.handlerReceitaClick}>
-              R
-            </button>
-            <button className="despesa" onClick={this.handlerDespesaClick}>
-              D
+            <button
+              className={
+                "receita " + (active === "receita" ? "activebutton" : "")
+              }
+              onClick={this.handlerReceitaClick}
+            >
+              <AttachMoney />
             </button>
             <button
-              className="transferencia"
+              className={
+                "despesa " + (active === "despesa" ? "activebutton" : "")
+              }
+              onClick={this.handlerDespesaClick}
+            >
+              <MoneyOff />
+            </button>
+            <button
+              className={
+                "transferencia " +
+                (active === "transferencia" ? "activebutton" : "")
+              }
               onClick={this.handlerTransferenciaClick}
             >
-              T
+              <CompareArrows />
             </button>
           </div>
         </div>
-        <div className="tipo-lancamento">
+        <div
+          className={
+            "tipo-lancamento " +
+            (this.state.receita
+              ? "receita"
+              : this.state.despesa
+              ? "despesa"
+              : "transferencia")
+          }
+        >
           {receita && (
             <NewReceita
               valor={this.state.valor}
               onChangeValue={this.handlerChangeValor}
+              dataMovimento={this.state.dataMovimento}
+              carteiraId={this.state.carteiraId}
             />
           )}
           {despesa && (
             <NewDespesa
               valor={this.state.valor}
               onChangeValue={this.handlerChangeValor}
+              dataMovimento={this.state.dataMovimento}
+              carteiraId={this.state.carteiraId}
             />
           )}
           {transferencia && (
             <NewTransferencia
               valor={this.state.valor}
               onChangeValue={this.handlerChangeValor}
+              dataMovimento={this.state.dataMovimento}
+              carteiraId={this.state.carteiraId}
             />
           )}
         </div>

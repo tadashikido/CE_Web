@@ -33,6 +33,14 @@
   margin: 0 10px;
 }
 
+.menu .menu-item .icon:hover {
+  color: #d6d6d6;
+}
+
+.active {
+  color: #d6d6d6 !important;
+}
+
 .menu .menu-item .icon .ico {
   font-size: 30px;
 }

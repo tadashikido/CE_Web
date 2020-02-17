@@ -1,7 +1,12 @@
-import React from 'react';
+import React from "react";
 
 export default class NewDespesa extends React.Component {
-    render() {
-        return <h1>Despesa</h1>
-    }
+  state = {
+    contasContabeis: [],
+    contaContabilId: 0
+  };
+
+  render() {
+    return <h1>Despesa</h1>;
+  }
 }
