@@ -104,3 +104,34 @@
   background: #3498db;
   color: white;
 }
+
+
+.new-lancamento .control {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+  font-weight: 500;
+}
+
+.new-lancamento .control > label {
+  margin-bottom: 2px;
+}
+
+.new-lancamento .control .input {
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  color: #9c9c9c;
+  height: 18px;
+  background-color: transparent;
+}
+
+.new-lancamento > button {
+  border: none;
+  height: 30px;
+  width: 100%;
+  margin-top: 8px;
+  background-color: #00adef;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}

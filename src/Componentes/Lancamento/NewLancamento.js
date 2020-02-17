@@ -18,6 +18,7 @@ export default class NewLancamento extends React.Component {
     valor: 0,
     dataMovimento: new Date(),
     carteiraId: 0,
+    obs: "",
     error: false
   };
 
@@ -105,6 +106,26 @@ export default class NewLancamento extends React.Component {
       });
   };
 
+  handlerChangeValor = e => {
+    this.setState({
+      valor: e.target.value
+    })
+  }
+
+
+  handlerChangeData = date => {
+    this.setState({
+      dataMovimento: date
+    })
+  }
+
+  handlerChangeCarteira = e => {
+    this.setState({
+      carteiraId: e.target.value
+    })
+  }
+
+
   render() {
     const { receita, despesa, transferencia } = this.state;
 
@@ -147,26 +168,35 @@ export default class NewLancamento extends React.Component {
         >
           {receita && (
             <NewReceita
+              carteiras={this.state.carteiras}
               valor={this.state.valor}
-              onChangeValue={this.handlerChangeValor}
+              onChangeValor={this.handlerChangeValor}
               dataMovimento={this.state.dataMovimento}
               carteiraId={this.state.carteiraId}
+              onChangeData={this.handlerChangeData}
+              onChangeCarteira={this.handlerChangeCarteira}
             />
           )}
           {despesa && (
             <NewDespesa
+              carteiras={this.state.carteiras}
               valor={this.state.valor}
-              onChangeValue={this.handlerChangeValor}
+              onChangeValor={this.handlerChangeValor}
               dataMovimento={this.state.dataMovimento}
               carteiraId={this.state.carteiraId}
+              onChangeData={this.handlerChangeData}
+              onChangeCarteira={this.handlerChangeCarteira}
             />
           )}
           {transferencia && (
             <NewTransferencia
+              carteiras={this.state.carteiras}
               valor={this.state.valor}
-              onChangeValue={this.handlerChangeValor}
               dataMovimento={this.state.dataMovimento}
               carteiraId={this.state.carteiraId}
+              onChangeValor={this.handlerChangeValor}
+              onChangeData={this.handlerChangeData}
+              onChangeCarteira={this.handlerChangeCarteira}
             />
           )}
         </div>
