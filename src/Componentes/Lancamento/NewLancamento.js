@@ -14,7 +14,6 @@ export default class NewLancamento extends React.Component {
     receita: false,
     despesa: true,
     transferencia: false,
-    active: "despesa",
     carteiras: [],
     valor: 0,
     dataMovimento: new Date(),
@@ -27,7 +26,6 @@ export default class NewLancamento extends React.Component {
       receita: true,
       despesa: false,
       transferencia: false,
-      active: "receita",
       error: false
     });
 
@@ -56,7 +54,6 @@ export default class NewLancamento extends React.Component {
       receita: false,
       despesa: true,
       transferencia: false,
-      active: "despesa",
       error: false
     });
 
@@ -85,7 +82,6 @@ export default class NewLancamento extends React.Component {
       receita: false,
       despesa: false,
       transferencia: true,
-      active: "transferencia",
       error: false
     });
 
@@ -110,7 +106,7 @@ export default class NewLancamento extends React.Component {
   };
 
   render() {
-    const { receita, despesa, transferencia, active } = this.state;
+    const { receita, despesa, transferencia } = this.state;
 
     return (
       <div className="new-lancamento">
@@ -118,25 +114,20 @@ export default class NewLancamento extends React.Component {
           <span>Selecione:</span>
           <div className="buttons">
             <button
-              className={
-                "receita " + (active === "receita" ? "activebutton" : "")
-              }
+              className={"receita " + (receita ? "activebutton" : "")}
               onClick={this.handlerReceitaClick}
             >
               <AttachMoney />
             </button>
             <button
-              className={
-                "despesa " + (active === "despesa" ? "activebutton" : "")
-              }
+              className={"despesa " + (despesa ? "activebutton" : "")}
               onClick={this.handlerDespesaClick}
             >
               <MoneyOff />
             </button>
             <button
               className={
-                "transferencia " +
-                (active === "transferencia" ? "activebutton" : "")
+                "transferencia " + (transferencia ? "activebutton" : "")
               }
               onClick={this.handlerTransferenciaClick}
             >
