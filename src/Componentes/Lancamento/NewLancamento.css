@@ -23,15 +23,15 @@
 }
 
 .new-lancamento .tipo-lancamento.receita {
-  background: #9effc8;
+  background: #d1ffe5;
 }
 
 .new-lancamento .tipo-lancamento.despesa {
-  background: #ffaaa1;
+  background: #ffd5d1;
 }
 
 .new-lancamento .tipo-lancamento.transferencia {
-  background: #91d3ff;
+  background: #c4e8ff;
 }
 
 .new-lancamento .controle {
@@ -49,9 +49,6 @@
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 600;
-}
-
-.new-lancamento .controle .buttons {
 }
 
 .new-lancamento .controle .buttons button {
@@ -125,7 +122,33 @@
   background-color: transparent;
 }
 
-.new-lancamento > button {
+.new-lancamento .form-receita .control .input {
+  color: #9c9c9c;
+  border-bottom: 1px solid #43c47b;
+}
+
+.new-lancamento .form-despesa .control .input {
+  color: #9c9c9c;
+  border-bottom: 1px solid #c24b40;
+}
+
+.new-lancamento .form-transferencia .control .input {
+  color: #9c9c9c;
+  border-bottom: 1px solid #4191c4;
+}
+
+.input-data {
+  text-align: center;
+}
+
+.input-valor {
+  text-align: right;
+  width: 169px;
+}
+
+.new-lancamento .form-receita > button,
+.new-lancamento .form-despesa > button,
+.new-lancamento .form-transferencia > button {
   border: none;
   height: 30px;
   width: 100%;

@@ -8,6 +8,12 @@ export default class NewReceita extends React.Component {
     servicoId: 0
   };
 
+  onChangeServico = e => {
+    this.setState({
+      servicoId: e.target.value
+    })
+  }
+
   render() {
     const {
       carteiras,
@@ -22,11 +28,11 @@ export default class NewReceita extends React.Component {
     registerLocale("pt-BR", ptbr);
 
     return (
-      <form>
+      <form className="form-receita" onSubmit={this.handlerOnSubimit}>
         <div className="control">
           <label>Data: </label>
           <DatePicker
-            className="input"
+            className="input input-data"
             locale="pt-BR"
             selected={dataMovimento}
             onChange={onChangeData}
@@ -36,7 +42,7 @@ export default class NewReceita extends React.Component {
 
         <div className="control">
           <label>Valor: </label>
-          <input className="input" type="text" value={valor} onChange={onChangeValor} />
+          <input className="input input-valor" type="text" value={valor} onChange={onChangeValor} />
         </div>
 
         <div className="control">
@@ -53,6 +59,23 @@ export default class NewReceita extends React.Component {
             ))}
           </select>
         </div>
+
+        <div className="control">
+          <label>Serviço: </label>
+          <select
+            className="input"
+            onChange={this.onChangeServico}
+            value={this.state.servicoId}
+          >
+            {this.state.servicos.map(servico => (
+              <option key={servico.id} value={servico.id}>
+                {servico.descricao}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button type="submit">Salvar</button>
       </form>
     );
   }
