@@ -20,9 +20,11 @@ export default class NewReceita extends React.Component {
       valor,
       dataMovimento,
       carteiraId,
+      obs,
       onChangeValor,
       onChangeData,
-      onChangeCarteira
+      onChangeCarteira,
+      onChangeObs
     } = this.props;
 
     registerLocale("pt-BR", ptbr);
@@ -73,6 +75,11 @@ export default class NewReceita extends React.Component {
               </option>
             ))}
           </select>
+        </div>
+
+        <div className="control">
+          <label>Observações: </label>
+          <input className="input" type="text" value={obs} onChange={onChangeObs} />
         </div>
 
         <button type="submit">Salvar</button>

@@ -124,6 +124,16 @@ export default class NewLancamento extends React.Component {
     })
   }
 
+  handlerChangeObs = e => {
+    this.setState({
+      obs: e.target.value.toUpperCase()
+    })
+  }
+
+  componentDidMount = () => {
+    this.handlerDespesaClick();
+  }
+
   render() {
     const { receita, despesa, transferencia } = this.state;
 
@@ -168,22 +178,26 @@ export default class NewLancamento extends React.Component {
             <NewReceita
               carteiras={this.state.carteiras}
               valor={this.state.valor}
-              onChangeValor={this.handlerChangeValor}
               dataMovimento={this.state.dataMovimento}
               carteiraId={this.state.carteiraId}
+              obs={this.state.obs}
+              onChangeValor={this.handlerChangeValor}
               onChangeData={this.handlerChangeData}
               onChangeCarteira={this.handlerChangeCarteira}
+              onChangeObs={this.handlerChangeObs}
             />
           )}
           {despesa && (
             <NewDespesa
               carteiras={this.state.carteiras}
               valor={this.state.valor}
-              onChangeValor={this.handlerChangeValor}
               dataMovimento={this.state.dataMovimento}
               carteiraId={this.state.carteiraId}
+              obs={this.state.obs}
+              onChangeValor={this.handlerChangeValor}
               onChangeData={this.handlerChangeData}
               onChangeCarteira={this.handlerChangeCarteira}
+              onChangeObs={this.handlerChangeObs}
             />
           )}
           {transferencia && (
@@ -192,9 +206,11 @@ export default class NewLancamento extends React.Component {
               valor={this.state.valor}
               dataMovimento={this.state.dataMovimento}
               carteiraId={this.state.carteiraId}
+              obs={this.state.obs}
               onChangeValor={this.handlerChangeValor}
               onChangeData={this.handlerChangeData}
               onChangeCarteira={this.handlerChangeCarteira}
+              onChangeObs={this.handlerChangeObs}
             />
           )}
         </div>
