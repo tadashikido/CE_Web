@@ -39,7 +39,7 @@ export default class NewLancamento extends React.Component {
         if (!res.message) {
           this.setState({
             carteiras: res,
-            carteiraId: res.length > 0 ? res[0].id : 0
+            carteiraId: this.state.carteiraId ? this.state.carteiraId : (res.length > 0 ? res[0].id : 0)
           });
         }
       })
@@ -67,7 +67,7 @@ export default class NewLancamento extends React.Component {
         if (!res.message) {
           this.setState({
             carteiras: res,
-            carteiraId: res.length > 0 ? res[0].id : 0
+            carteiraId: this.state.carteiraId ? this.state.carteiraId : (res.length > 0 ? res[0].id : 0)
           });
         }
       })
@@ -95,7 +95,7 @@ export default class NewLancamento extends React.Component {
         if (!res.message) {
           this.setState({
             carteiras: res,
-            carteiraId: res.length > 0 ? res[0].id : 0
+            carteiraId: this.state.carteiraId ? this.state.carteiraId : (res.length > 0 ? res[0].id : 0)
           });
         }
       })
@@ -112,7 +112,6 @@ export default class NewLancamento extends React.Component {
     })
   }
 
-
   handlerChangeData = date => {
     this.setState({
       dataMovimento: date
@@ -124,7 +123,6 @@ export default class NewLancamento extends React.Component {
       carteiraId: e.target.value
     })
   }
-
 
   render() {
     const { receita, despesa, transferencia } = this.state;
