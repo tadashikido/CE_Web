@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptbr from "date-fns/locale/pt-BR";
+import Dropdown from 'react-dropdown'
 
 import { API_PATH } from "../api";
 import { getAuthentication } from "../Login/auth";
