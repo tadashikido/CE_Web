@@ -2,17 +2,60 @@ import React from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptbr from "date-fns/locale/pt-BR";
 
+import { API_PATH } from "../api";
+import { getAuthentication } from "../Login/auth";
+
 export default class NewDespesa extends React.Component {
   state = {
     contasContabeis: [],
-    contaContabilId: 0
+    contaContabilId: 0,
+    fornecedores: [],
+    nomeFornecedor: ""
+  };
+
+  carregarContasContabeis = () => {
+    fetch(API_PATH + "/api/GetContasContabeis", {
+      method: "POST",
+      headers: getAuthentication()
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (!res.message) {
+          this.setState({
+            contasContabeis: res,
+            contaContabilId: res.length > 0 ? res[0].id : 0
+          });
+        }
+      })
+      .catch(() => {});
+  };
+
+  carregarFornecedores = () => {
+    fetch(API_PATH + "/api/GetFornecedores", {
+      method: "POST",
+      headers: getAuthentication()
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (!res.message) {
+          this.setState({
+            fornecedores: res
+          });
+        }
+      })
+      .catch(() => {});
   };
 
   onChangeContaContabil = e => {
     this.setState({
       contaContabilId: e.target.value
-    })
-  }
+    });
+  };
+
+  componentDidMount = () => {
+    this.carregarContasContabeis();
+    this.carregarFornecedores();
+  };
 
   render() {
     const {
@@ -84,7 +127,12 @@ export default class NewDespesa extends React.Component {
 
         <div className="control">
           <label>Observações: </label>
-          <input className="input" type="text" value={obs} onChange={onChangeObs} />
+          <input
+            className="input"
+            type="text"
+            value={obs}
+            onChange={onChangeObs}
+          />
         </div>
 
         <button type="submit">Salvar</button>

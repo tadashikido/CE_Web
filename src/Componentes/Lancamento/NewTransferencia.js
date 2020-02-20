@@ -11,7 +11,7 @@ export default class NewTransferencia extends React.Component {
     carteiraDestinoId: 0
   };
 
-  handlerTransferenciaClick = () => {
+  carregarCarteirasDestinos = () => {
     fetch(API_PATH + "/api/GetCarteiras?res=TRANSFER", {
       method: "POST",
       headers: getAuthentication()
@@ -35,7 +35,7 @@ export default class NewTransferencia extends React.Component {
   };
 
   componentDidMount = () => {
-    this.handlerTransferenciaClick();
+    this.carregarCarteirasDestinos();
   };
 
   render() {
@@ -108,7 +108,12 @@ export default class NewTransferencia extends React.Component {
 
         <div className="control">
           <label>Observações: </label>
-          <input className="input" type="text" value={obs} onChange={onChangeObs} />
+          <input
+            className="input"
+            type="text"
+            value={obs}
+            onChange={onChangeObs}
+          />
         </div>
 
         <button type="submit">Salvar</button>
