@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptbr from "date-fns/locale/pt-BR";
+import Creatable from "react-select/creatable";
 
 import { formatReal } from "../Utils";
 import { API_PATH } from "../api";
@@ -12,6 +13,7 @@ export default class NewReceita extends React.Component {
     servicoId: 0,
     clientes: [],
     clienteNome: "",
+    clienteId: 0,
     valorEditing: false
   };
 
@@ -50,7 +52,8 @@ export default class NewReceita extends React.Component {
 
   onChangeCliente = value => {
     this.setState({
-      clienteNome: value
+      clienteId: value.id,
+      clienteNome: value.nome.toUpperCase()
     });
   };
 
@@ -89,6 +92,21 @@ export default class NewReceita extends React.Component {
 
     return (
       <form className="form-receita" onSubmit={this.handlerOnSubimit}>
+        <div className="control">
+          <label>Cliente: </label>
+          <Creatable
+            classNamePrefix="input-creatable"
+            options={this.state.clientes}
+            getOptionValue={({ id }) => id}
+            getOptionLabel={({ nome }) => nome}
+            onChange={this.onChangeCliente}
+            getNewOptionData={inputValue => ({
+              id: "0",
+              nome: inputValue.toUpperCase()
+            })}
+            placeholder="Selecione ou digite..."
+          />
+        </div>
         <div className="control">
           <label>Data: </label>
           <DatePicker

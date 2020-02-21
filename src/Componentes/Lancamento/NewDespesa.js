@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptbr from "date-fns/locale/pt-BR";
+import Creatable from "react-select/creatable";
 
 import { formatReal } from "../Utils";
 import { API_PATH } from "../api";
@@ -11,7 +12,8 @@ export default class NewDespesa extends React.Component {
     contasContabeis: [],
     contaContabilId: 0,
     fornecedores: [],
-    nomeFornecedor: "",
+    fornecedorNome: "",
+    fornecedorId: 0,
     valorEditing: false
   };
 
@@ -46,6 +48,13 @@ export default class NewDespesa extends React.Component {
         }
       })
       .catch(() => {});
+  };
+
+  onChangeFornecedor = value => {
+    this.setState({
+      fornecedorId: value.id,
+      fornecedorNome: value.nome.toUpperCase()
+    });
   };
 
   onChangeContaContabil = e => {
@@ -83,6 +92,21 @@ export default class NewDespesa extends React.Component {
 
     return (
       <form className="form-despesa">
+        <div className="control">
+          <label>Fornecedor: </label>
+          <Creatable
+            classNamePrefix="input-creatable"
+            options={this.state.fornecedores}
+            getOptionValue={({ id }) => id}
+            getOptionLabel={({ nome }) => nome}
+            onChange={this.onChangeFornecedor}
+            getNewOptionData={inputValue => ({
+              id: "0",
+              nome: inputValue.toUpperCase()
+            })}
+            placeholder="Selecione ou digite..."
+          />
+        </div>
         <div className="control">
           <label>Data: </label>
           <DatePicker
