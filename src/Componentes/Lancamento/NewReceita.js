@@ -1,8 +1,8 @@
 import React from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptbr from "date-fns/locale/pt-BR";
-import Dropdown from 'react-dropdown'
 
+import { formatReal } from "../Utils";
 import { API_PATH } from "../api";
 import { getAuthentication } from "../Login/auth";
 
@@ -11,7 +11,8 @@ export default class NewReceita extends React.Component {
     servicos: [],
     servicoId: 0,
     clientes: [],
-    clienteNome: ""
+    clienteNome: "",
+    valorEditing: false
   };
 
   carregarServicos = () => {
@@ -59,6 +60,13 @@ export default class NewReceita extends React.Component {
     });
   };
 
+  toggleValorEditing = () =>
+  {
+    this.setState({
+      valorEditing: !this.state.valorEditing
+    });
+  }
+
   componentDidMount = () => {
     this.carregarServicos();
     this.carregarClientes();
@@ -94,12 +102,23 @@ export default class NewReceita extends React.Component {
 
         <div className="control">
           <label>Valor: </label>
-          <input
-            className="input input-valor"
-            type="text"
-            value={valor}
-            onChange={onChangeValor}
-          />
+          {this.state.valorEditing ? (
+            <input
+              className="input input-valor"
+              type="text"
+              value={valor}
+              onChange={onChangeValor}
+              onBlur={this.toggleValorEditing}
+            />
+          ) : (
+            <input
+              className="input input-valor"
+              type="text"
+              value={formatReal(valor)}
+              onFocus={this.toggleValorEditing}
+              readOnly
+            />
+          )}
         </div>
 
         <div className="control">
