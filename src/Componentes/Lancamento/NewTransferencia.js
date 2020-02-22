@@ -12,8 +12,8 @@ export default class NewTransferencia extends React.Component {
   };
 
   carregarCarteirasDestinos = () => {
-    fetch(API_PATH + "/api/GetCarteiras?res=TRANSFER", {
-      method: "POST",
+    fetch(API_PATH + "/api/carteiras?res=TRANSFER", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())

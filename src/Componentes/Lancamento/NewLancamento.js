@@ -30,8 +30,8 @@ export default class NewLancamento extends React.Component {
       error: false
     });
 
-    fetch(API_PATH + "/api/GetCarteiras?res=ENTRADAS", {
-      method: "POST",
+    fetch(API_PATH + "/api/carteiras?res=ENTRADAS", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
@@ -39,7 +39,11 @@ export default class NewLancamento extends React.Component {
         if (!res.message) {
           this.setState({
             carteiras: res,
-            carteiraId: this.state.carteiraId ? this.state.carteiraId : (res.length > 0 ? res[0].id : 0)
+            carteiraId: this.state.carteiraId
+              ? this.state.carteiraId
+              : res.length > 0
+              ? res[0].id
+              : 0
           });
         }
       })
@@ -58,8 +62,8 @@ export default class NewLancamento extends React.Component {
       error: false
     });
 
-    fetch(API_PATH + "/api/GetCarteiras?res=SAIDAS", {
-      method: "POST",
+    fetch(API_PATH + "/api/carteiras?res=SAIDAS", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
@@ -67,7 +71,11 @@ export default class NewLancamento extends React.Component {
         if (!res.message) {
           this.setState({
             carteiras: res,
-            carteiraId: this.state.carteiraId ? this.state.carteiraId : (res.length > 0 ? res[0].id : 0)
+            carteiraId: this.state.carteiraId
+              ? this.state.carteiraId
+              : res.length > 0
+              ? res[0].id
+              : 0
           });
         }
       })
@@ -86,8 +94,8 @@ export default class NewLancamento extends React.Component {
       error: false
     });
 
-    fetch(API_PATH + "/api/GetCarteiras?res=TRANSFER", {
-      method: "POST",
+    fetch(API_PATH + "/api/carteiras?res=TRANSFER", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
@@ -95,7 +103,11 @@ export default class NewLancamento extends React.Component {
         if (!res.message) {
           this.setState({
             carteiras: res,
-            carteiraId: this.state.carteiraId ? this.state.carteiraId : (res.length > 0 ? res[0].id : 0)
+            carteiraId: this.state.carteiraId
+              ? this.state.carteiraId
+              : res.length > 0
+              ? res[0].id
+              : 0
           });
         }
       })
@@ -109,30 +121,30 @@ export default class NewLancamento extends React.Component {
   handlerChangeValor = e => {
     this.setState({
       valor: e.target.value
-    })
-  }
+    });
+  };
 
   handlerChangeData = date => {
     this.setState({
       dataMovimento: date
-    })
-  }
+    });
+  };
 
   handlerChangeCarteira = e => {
     this.setState({
       carteiraId: e.target.value
-    })
-  }
+    });
+  };
 
   handlerChangeObs = e => {
     this.setState({
       obs: e.target.value.toUpperCase()
-    })
-  }
+    });
+  };
 
   componentDidMount = () => {
     this.handlerDespesaClick();
-  }
+  };
 
   render() {
     const { receita, despesa, transferencia } = this.state;

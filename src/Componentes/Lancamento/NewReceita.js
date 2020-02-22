@@ -16,8 +16,8 @@ export default class NewReceita extends React.Component {
   };
 
   carregarServicos = () => {
-    fetch(API_PATH + "/api/GetServicos", {
-      method: "POST",
+    fetch(API_PATH + "/api/servicos", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
@@ -33,8 +33,8 @@ export default class NewReceita extends React.Component {
   };
 
   carregarClientes = () => {
-    fetch(API_PATH + "/api/GetClientes", {
-      method: "POST",
+    fetch(API_PATH + "/api/clientes", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())

@@ -16,8 +16,8 @@ export default class NewDespesa extends React.Component {
   };
 
   carregarContasContabeis = () => {
-    fetch(API_PATH + "/api/GetContasContabeis", {
-      method: "POST",
+    fetch(API_PATH + "/api/contasContabeis", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
@@ -33,8 +33,8 @@ export default class NewDespesa extends React.Component {
   };
 
   carregarFornecedores = () => {
-    fetch(API_PATH + "/api/GetFornecedores", {
-      method: "POST",
+    fetch(API_PATH + "/api/fornecedores", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())

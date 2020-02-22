@@ -17,8 +17,8 @@ export default class UltimosLancamentos extends React.Component {
       error: false
     });
 
-    fetch(API_PATH + "/api/GetUltimosLancamentos", {
-      method: "POST",
+    fetch(API_PATH + "/api/ultimosLancamentos", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
