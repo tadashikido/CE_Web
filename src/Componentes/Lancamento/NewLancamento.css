@@ -172,3 +172,30 @@
 .new-lancamento .input-creatable__indicators {
   display: none;
 }
+
+.processing {
+  text-align: center;
+}
+
+.processing .img {
+  width: 100px;
+  margin-top: 10px;
+}
+
+.new-lancamento .save-box {
+  text-align: center;
+  border: 1px solid;
+  padding: 5px 20px;
+}
+
+.new-lancamento .save-box.save-success {
+  background: #dae8d2;
+  border-color: #3c8a31;
+  color: #3c8a31;
+}
+
+.new-lancamento .save-box.save-fail {
+  background: #ebd8d7;
+  border-color: #9b302e;
+  color: #9b302e;
+}

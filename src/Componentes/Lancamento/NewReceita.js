@@ -6,6 +6,7 @@ import Creatable from "react-select/creatable";
 import { formatReal } from "../Utils";
 import { API_PATH } from "../api";
 import { getAuthentication } from "../Login/auth";
+import processando from "../../static/loading.png";
 
 export default class NewReceita extends React.Component {
   state = {
@@ -14,10 +15,16 @@ export default class NewReceita extends React.Component {
     clientes: [],
     clienteNome: "",
     clienteId: 0,
-    valorEditing: false
+    valorEditing: false,
+    processing: false,
+    erroSave: false,
+    save: false
   };
 
   carregarServicos = () => {
+    this.setState({
+      processing: true
+    });
     fetch(API_PATH + "/api/servicos", {
       method: "GET",
       headers: getAuthentication()
@@ -31,10 +38,18 @@ export default class NewReceita extends React.Component {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => {
+        this.setState({
+          processing: false
+        });
+      });
   };
 
   carregarClientes = () => {
+    this.setState({
+      processing: true
+    });
     fetch(API_PATH + "/api/clientes", {
       method: "GET",
       headers: getAuthentication()
@@ -47,7 +62,12 @@ export default class NewReceita extends React.Component {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => {
+        this.setState({
+          processing: false
+        });
+      });
   };
 
   onChangeCliente = value => {
@@ -63,12 +83,85 @@ export default class NewReceita extends React.Component {
     });
   };
 
-  toggleValorEditing = () =>
-  {
+  toggleValorEditing = () => {
     this.setState({
       valorEditing: !this.state.valorEditing
     });
-  }
+  };
+
+  handlerSubmit = e => {
+    const {
+      valor,
+      dataMovimento,
+      carteiraId,
+      obs,
+      autoLancamentoId
+    } = this.props;
+
+    e.preventDefault();
+    this.setState({
+      erroSave: false,
+      processing: true
+    });
+    fetch(
+      API_PATH +
+        "/api/recebimento?" +
+        "autoLanId=" +
+        autoLancamentoId +
+        "&" +
+        "clienteId=" +
+        this.state.clienteId +
+        "&" +
+        "clienteNome=" +
+        this.state.clienteNome +
+        "&" +
+        "data=" +
+        dataMovimento.toISOString() +
+        "&" +
+        "valor=" +
+        valor.replace(",", ".") +
+        "&" +
+        "carteiraId=" +
+        carteiraId +
+        "&" +
+        "servicoId=" +
+        this.state.servicoId +
+        "&" +
+        "observacao=" +
+        obs,
+      {
+        method: "POST",
+        headers: getAuthentication()
+      }
+    )
+      .then(res => res.json())
+      .then(res => {
+        if (res.message) {
+          this.setState({
+            erroSave: true
+          });
+        } else {
+          this.setState({
+            save: true
+          });
+          setTimeout(() => {
+            this.setState({
+              save: false
+            });
+          }, 3000);
+        }
+      })
+      .catch(() => {
+        this.setState({
+          erroSave: true
+        });
+      })
+      .finally(() => {
+        this.setState({
+          processing: false
+        });
+      });
+  };
 
   componentDidMount = () => {
     this.carregarServicos();
@@ -85,13 +178,50 @@ export default class NewReceita extends React.Component {
       onChangeValor,
       onChangeData,
       onChangeCarteira,
-      onChangeObs
+      onChangeObs,
+      autoLancamentos,
+      autoLancamentoId,
+      onChangeAutoLan
     } = this.props;
 
     registerLocale("pt-BR", ptbr);
 
+    if (this.state.processing)
+      return (
+        <div className="processing">
+          <img className="img" alt="processando" src={processando}></img>
+          <br />
+          <span>Processando...</span>
+        </div>
+      );
+
     return (
-      <form className="form-receita" onSubmit={this.handlerOnSubimit}>
+      <form className="form-receita" onSubmit={this.handlerSubmit}>
+        {this.state.save && (
+          <div className="save-box save-success"> Salvo com sucesso! </div>
+        )}
+        {this.state.erroSave && (
+          <div className="save-box save-fail">
+            Erro ao salvar, tente novamente!
+          </div>
+        )}
+        {autoLancamentos.length !== 1 && (
+          <div className="control">
+            <label>Auto Lançamento: </label>
+            <select
+              className="input"
+              onChange={onChangeAutoLan}
+              value={autoLancamentoId}
+            >
+              {autoLancamentos.map(autoLan => (
+                <option key={autoLan.id} value={autoLan.chave}>
+                  {autoLan.chave}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <div className="control">
           <label>Cliente: </label>
           <Creatable

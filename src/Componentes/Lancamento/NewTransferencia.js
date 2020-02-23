@@ -5,15 +5,22 @@ import ptbr from "date-fns/locale/pt-BR";
 import { formatReal } from "../Utils";
 import { API_PATH } from "../api";
 import { getAuthentication } from "../Login/auth";
+import processando from "../../static/loading.png";
 
 export default class NewTransferencia extends React.Component {
   state = {
     carteirasDestino: [],
     carteiraDestinoId: 0,
-    valorEditing: false
+    valorEditing: false,
+    processing: false,
+    erroSave: false,
+    save: false
   };
 
   carregarCarteirasDestinos = () => {
+    this.setState({
+      processing: true
+    });
     fetch(API_PATH + "/api/carteiras?res=TRANSFER", {
       method: "GET",
       headers: getAuthentication()
@@ -27,7 +34,12 @@ export default class NewTransferencia extends React.Component {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => {
+        this.setState({
+          processing: false
+        });
+      });
   };
 
   handlerChangeCarteiraDestino = e => {
@@ -36,12 +48,106 @@ export default class NewTransferencia extends React.Component {
     });
   };
 
-  toggleValorEditing = () =>
-  {
+  toggleValorEditing = () => {
     this.setState({
       valorEditing: !this.state.valorEditing
     });
-  }
+  };
+
+  handlerSubmit = e => {
+    e.preventDefault();
+    this.setState({
+      erroSave: false,
+      processing: true
+    });
+    fetch(API_PATH + "/api/transferencia", {
+      method: "POST",
+      headers: getAuthentication(),
+      body: {}
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.message) {
+          this.setState({
+            erroSave: true
+          });
+        }
+      })
+      .catch(() => {
+        this.setState({
+          erroSave: true,
+          processing: false
+        });
+      });
+  };
+
+  handlerSubmit = e => {
+    const {
+      valor,
+      dataMovimento,
+      carteiraId,
+      obs,
+      autoLancamentoId
+    } = this.props;
+
+    e.preventDefault();
+    this.setState({
+      erroSave: false,
+      processing: true
+    });
+    fetch(
+      API_PATH +
+        "/api/transferencia?" +
+        "autoLanId=" +
+        autoLancamentoId +
+        "&" +
+        "data=" +
+        dataMovimento.toISOString() +
+        "&" +
+        "valor=" +
+        valor.replace(",", ".") +
+        "&" +
+        "carteiraOrigemId=" +
+        carteiraId +
+        "&" +
+        "carteiraDestinoId=" +
+        this.state.carteiraDestinoId +
+        "&" +
+        "observacao=" +
+        obs,
+      {
+        method: "POST",
+        headers: getAuthentication()
+      }
+    )
+      .then(res => res.json())
+      .then(res => {
+        if (res.message) {
+          this.setState({
+            erroSave: true
+          });
+        } else {
+          this.setState({
+            save: true
+          });
+          setTimeout(() => {
+            this.setState({
+              save: false
+            });
+          }, 3000);
+        }
+      })
+      .catch(() => {
+        this.setState({
+          erroSave: true
+        });
+      })
+      .finally(() => {
+        this.setState({
+          processing: false
+        });
+      });
+  };
 
   componentDidMount = () => {
     this.carregarCarteirasDestinos();
@@ -57,13 +163,50 @@ export default class NewTransferencia extends React.Component {
       onChangeValor,
       onChangeData,
       onChangeCarteira,
-      onChangeObs
+      onChangeObs,
+      autoLancamentos,
+      autoLancamentoId,
+      onChangeAutoLan
     } = this.props;
 
     registerLocale("pt-BR", ptbr);
 
+    if (this.state.processing)
+      return (
+        <div className="processing">
+          <img className="img" alt="processando" src={processando}></img>
+          <br />
+          <span>Processando...</span>
+        </div>
+      );
+
     return (
-      <form className="form-transferencia">
+      <form className="form-transferencia" onSubmit={this.handlerSubmit}>
+        {this.state.save && (
+          <div className="save-box save-success"> Salvo com sucesso! </div>
+        )}
+        {this.state.erroSave && (
+          <div className="save-box save-fail">
+            Erro ao salvar, tente novamente!
+          </div>
+        )}
+        {autoLancamentos.length !== 1 && (
+          <div className="control">
+            <label>Auto Lançamento: </label>
+            <select
+              className="input"
+              onChange={onChangeAutoLan}
+              value={autoLancamentoId}
+            >
+              {autoLancamentos.map(autoLan => (
+                <option key={autoLan.id} value={autoLan.chave}>
+                  {autoLan.chave}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <div className="control">
           <label>Data: </label>
           <DatePicker
