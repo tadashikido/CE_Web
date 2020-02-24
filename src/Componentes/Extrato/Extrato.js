@@ -51,12 +51,12 @@ export default class Extrato extends React.Component {
     });
     fetch(
       API_PATH +
-        "/api/GetSaldosInicial?idCarteira=" +
+        "/api/saldosInicialCarteira?idCarteira=" +
         this.state.carteiraId +
         "&data=" +
         this.state.startDate.toISOString(),
       {
-        method: "POST",
+        method: "GET",
         headers: getAuthentication()
       }
     )
@@ -67,14 +67,14 @@ export default class Extrato extends React.Component {
         });
         fetch(
           API_PATH +
-            "/api/GetExtrato?idCarteira=" +
+            "/api/extrato?idCarteira=" +
             this.state.carteiraId +
             "&dtInicio=" +
             this.state.startDate.toISOString() +
             "&dtFim=" +
             this.state.endDate.toISOString(),
           {
-            method: "POST",
+            method: "GET",
             headers: getAuthentication()
           }
         )
@@ -99,8 +99,8 @@ export default class Extrato extends React.Component {
   }
 
   carregaCarteiras = () => {
-    fetch(API_PATH + "/api/GetCarteiras?res=EXTRATOS", {
-      method: "POST",
+    fetch(API_PATH + "/api/carteiras?res=EXTRATOS", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())

@@ -102,7 +102,6 @@
   color: white;
 }
 
-
 .new-lancamento .control {
   display: flex;
   flex-direction: column;
@@ -122,17 +121,20 @@
   background-color: transparent;
 }
 
-.new-lancamento .form-receita .control .input {
+.new-lancamento .form-receita .control .input,
+.new-lancamento .form-receita .input-creatable__control {
   color: #9c9c9c;
   border-bottom: 1px solid #43c47b;
 }
 
-.new-lancamento .form-despesa .control .input {
+.new-lancamento .form-despesa .control .input,
+.new-lancamento .form-despesa .input-creatable__control {
   color: #9c9c9c;
   border-bottom: 1px solid #c24b40;
 }
 
-.new-lancamento .form-transferencia .control .input {
+.new-lancamento .form-transferencia .control .input,
+.new-lancamento .form-recetransferenciaita .input-creatable__control {
   color: #9c9c9c;
   border-bottom: 1px solid #4191c4;
 }
@@ -157,4 +159,43 @@
   color: white;
   font-weight: 600;
   cursor: pointer;
+}
+
+.new-lancamento .input-creatable__control {
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  color: #9c9c9c;
+  height: 18px;
+  background-color: transparent;
+}
+
+.new-lancamento .input-creatable__indicators {
+  display: none;
+}
+
+.processing {
+  text-align: center;
+}
+
+.processing .img {
+  width: 100px;
+  margin-top: 10px;
+}
+
+.new-lancamento .save-box {
+  text-align: center;
+  border: 1px solid;
+  padding: 5px 20px;
+}
+
+.new-lancamento .save-box.save-success {
+  background: #dae8d2;
+  border-color: #3c8a31;
+  color: #3c8a31;
+}
+
+.new-lancamento .save-box.save-fail {
+  background: #ebd8d7;
+  border-color: #9b302e;
+  color: #9b302e;
 }

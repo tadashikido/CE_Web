@@ -17,8 +17,8 @@ export default class SaldoCarteiraList extends React.Component {
       error: false
     });
 
-    fetch(API_PATH + "/api/GetSaldosCarteira", {
-      method: "POST",
+    fetch(API_PATH + "/api/saldosCarteira", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())

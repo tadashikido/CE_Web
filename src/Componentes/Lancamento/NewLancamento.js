@@ -19,6 +19,8 @@ export default class NewLancamento extends React.Component {
     dataMovimento: new Date(),
     carteiraId: 0,
     obs: "",
+    autoLancamentos: [],
+    autoLancamentoId: 0,
     error: false
   };
 
@@ -30,8 +32,8 @@ export default class NewLancamento extends React.Component {
       error: false
     });
 
-    fetch(API_PATH + "/api/GetCarteiras?res=ENTRADAS", {
-      method: "POST",
+    fetch(API_PATH + "/api/carteiras?res=ENTRADAS", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
@@ -39,8 +41,13 @@ export default class NewLancamento extends React.Component {
         if (!res.message) {
           this.setState({
             carteiras: res,
-            carteiraId: this.state.carteiraId ? this.state.carteiraId : (res.length > 0 ? res[0].id : 0)
+            carteiraId: this.state.carteiraId
+              ? this.state.carteiraId
+              : res.length > 0
+              ? res[0].id
+              : 0
           });
+          this.carregaAutosLancamentos();
         }
       })
       .catch(() => {
@@ -58,8 +65,8 @@ export default class NewLancamento extends React.Component {
       error: false
     });
 
-    fetch(API_PATH + "/api/GetCarteiras?res=SAIDAS", {
-      method: "POST",
+    fetch(API_PATH + "/api/carteiras?res=SAIDAS", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
@@ -67,8 +74,13 @@ export default class NewLancamento extends React.Component {
         if (!res.message) {
           this.setState({
             carteiras: res,
-            carteiraId: this.state.carteiraId ? this.state.carteiraId : (res.length > 0 ? res[0].id : 0)
+            carteiraId: this.state.carteiraId
+              ? this.state.carteiraId
+              : res.length > 0
+              ? res[0].id
+              : 0
           });
+          this.carregaAutosLancamentos();
         }
       })
       .catch(() => {
@@ -86,8 +98,8 @@ export default class NewLancamento extends React.Component {
       error: false
     });
 
-    fetch(API_PATH + "/api/GetCarteiras?res=TRANSFER", {
-      method: "POST",
+    fetch(API_PATH + "/api/carteiras?res=TRANSFER", {
+      method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
@@ -95,7 +107,33 @@ export default class NewLancamento extends React.Component {
         if (!res.message) {
           this.setState({
             carteiras: res,
-            carteiraId: this.state.carteiraId ? this.state.carteiraId : (res.length > 0 ? res[0].id : 0)
+            carteiraId: this.state.carteiraId
+              ? this.state.carteiraId
+              : res.length > 0
+              ? res[0].id
+              : 0
+          });
+          this.carregaAutosLancamentos();
+        }
+      })
+      .catch(() => {
+        this.setState({
+          error: true
+        });
+      });
+  };
+
+  carregaAutosLancamentos = () => {
+    fetch(API_PATH + "/api/autoLancamentos", {
+      method: "GET",
+      headers: getAuthentication()
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (!res.message) {
+          this.setState({
+            autoLancamentos: res,
+            autoLancamentoId: res.length > 0 ? res[0].id : 0
           });
         }
       })
@@ -109,20 +147,36 @@ export default class NewLancamento extends React.Component {
   handlerChangeValor = e => {
     this.setState({
       valor: e.target.value
-    })
-  }
+    });
+  };
 
   handlerChangeData = date => {
     this.setState({
       dataMovimento: date
-    })
-  }
+    });
+  };
 
   handlerChangeCarteira = e => {
     this.setState({
       carteiraId: e.target.value
-    })
-  }
+    });
+  };
+
+  handlerChangeObs = e => {
+    this.setState({
+      obs: e.target.value.toUpperCase()
+    });
+  };
+
+  handlerChangeAutoLan = e => {
+    this.setState({
+      autoLancamentoId: e.target.value
+    });
+  };
+
+  componentDidMount = () => {
+    this.handlerDespesaClick();
+  };
 
   render() {
     const { receita, despesa, transferencia } = this.state;
@@ -168,22 +222,34 @@ export default class NewLancamento extends React.Component {
             <NewReceita
               carteiras={this.state.carteiras}
               valor={this.state.valor}
-              onChangeValor={this.handlerChangeValor}
               dataMovimento={this.state.dataMovimento}
               carteiraId={this.state.carteiraId}
+              obs={this.state.obs}
+              autoLancamentos={this.state.autoLancamentos}
+              autoLancamentoId={this.state.autoLancamentoId}
+              onChangeAutoLan={this.handlerChangeAutoLan}
+              onChangeValor={this.handlerChangeValor}
               onChangeData={this.handlerChangeData}
               onChangeCarteira={this.handlerChangeCarteira}
+              onChangeObs={this.handlerChangeObs}
+              error={this.state.error}
             />
           )}
           {despesa && (
             <NewDespesa
               carteiras={this.state.carteiras}
               valor={this.state.valor}
-              onChangeValor={this.handlerChangeValor}
               dataMovimento={this.state.dataMovimento}
               carteiraId={this.state.carteiraId}
+              obs={this.state.obs}
+              autoLancamentos={this.state.autoLancamentos}
+              autoLancamentoId={this.state.autoLancamentoId}
+              onChangeAutoLan={this.handlerChangeAutoLan}
+              onChangeValor={this.handlerChangeValor}
               onChangeData={this.handlerChangeData}
               onChangeCarteira={this.handlerChangeCarteira}
+              onChangeObs={this.handlerChangeObs}
+              error={this.state.error}
             />
           )}
           {transferencia && (
@@ -192,9 +258,15 @@ export default class NewLancamento extends React.Component {
               valor={this.state.valor}
               dataMovimento={this.state.dataMovimento}
               carteiraId={this.state.carteiraId}
+              obs={this.state.obs}
+              autoLancamentos={this.state.autoLancamentos}
+              autoLancamentoId={this.state.autoLancamentoId}
+              onChangeAutoLan={this.handlerChangeAutoLan}
               onChangeValor={this.handlerChangeValor}
               onChangeData={this.handlerChangeData}
               onChangeCarteira={this.handlerChangeCarteira}
+              onChangeObs={this.handlerChangeObs}
+              error={this.state.error}
             />
           )}
         </div>

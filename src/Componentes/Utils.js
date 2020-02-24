@@ -1,4 +1,4 @@
-const formatReal = valor => valor.toFixed(2).replace(".", ",");
+const formatReal = valor => parseFloat(valor.toString().replace(",", ".")).toFixed(2).replace(".", ",");
 
 const formatData = data => {
   return data.toString();
