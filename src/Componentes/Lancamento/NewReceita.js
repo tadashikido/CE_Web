@@ -181,10 +181,24 @@ export default class NewReceita extends React.Component {
       onChangeObs,
       autoLancamentos,
       autoLancamentoId,
-      onChangeAutoLan
+      onChangeAutoLan,
+      error
     } = this.props;
 
     registerLocale("pt-BR", ptbr);
+
+    if (error)
+      return (
+        <div className="error">
+          <img
+            className="img"
+            alt="Erro ao processar"
+            src="https://cdn2.iconfinder.com/data/icons/oops-404-error/64/208_oops-face-emoji-emoticon-sad-512.png"
+          ></img>
+          <br />
+          <span>Erro ao processar os dados, tente novamente!</span>
+        </div>
+      );
 
     if (this.state.processing)
       return (

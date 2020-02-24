@@ -33,7 +33,7 @@ export default class ExtratoLancamentos extends React.Component {
             src="https://cdn2.iconfinder.com/data/icons/oops-404-error/64/208_oops-face-emoji-emoticon-sad-512.png"
           ></img>
           <br />
-          <span>Erro ao processar dados, tente novamente!</span>
+          <span>Erro ao processar os dados, tente novamente!</span>
         </div>
       );
 

@@ -232,6 +232,7 @@ export default class NewLancamento extends React.Component {
               onChangeData={this.handlerChangeData}
               onChangeCarteira={this.handlerChangeCarteira}
               onChangeObs={this.handlerChangeObs}
+              error={this.state.error}
             />
           )}
           {despesa && (
@@ -248,6 +249,7 @@ export default class NewLancamento extends React.Component {
               onChangeData={this.handlerChangeData}
               onChangeCarteira={this.handlerChangeCarteira}
               onChangeObs={this.handlerChangeObs}
+              error={this.state.error}
             />
           )}
           {transferencia && (
@@ -264,6 +266,7 @@ export default class NewLancamento extends React.Component {
               onChangeData={this.handlerChangeData}
               onChangeCarteira={this.handlerChangeCarteira}
               onChangeObs={this.handlerChangeObs}
+              error={this.state.error}
             />
           )}
         </div>
