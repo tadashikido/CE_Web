@@ -13,6 +13,9 @@ export default class BarChart extends React.Component {
       xaxis: {
         categories: []
       },
+      dataLabels: {
+        enabled: false
+      },
       colors: ["#2d4cbd", "#c22b2b"]
     },
 
@@ -100,6 +103,9 @@ export default class BarChart extends React.Component {
   render() {
     return (
       <div className="container-chart">
+        <div className="titulo">
+          <h2 className="titulos center">RECEITAS X DESPESAS</h2>
+        </div>
         <Chart
           type="bar"
           options={this.state.options}

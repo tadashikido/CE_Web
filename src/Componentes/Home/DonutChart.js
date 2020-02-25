@@ -73,6 +73,9 @@ export default class DonutChart extends React.Component {
   render() {
     return (
       <div className="container-chart chart2">
+        <div className="titulo">
+          <h2 className="titulos center">DESPESAS POR CATEGORIAS</h2>
+        </div>
         <Chart
           series={this.state.series}
           options={this.state.options}

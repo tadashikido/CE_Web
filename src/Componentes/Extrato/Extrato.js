@@ -44,6 +44,18 @@ export default class Extrato extends React.Component {
     this.carregaExtrato();
   };
 
+  deleteLancamento = index => {
+    this.setState({
+      lancamentos: [
+        ...this.state.lancamentos.slice(0, index),
+        ...this.state.lancamentos.slice(
+          index + 1,
+          this.state.lancamentos.length
+        )
+      ]
+    });
+  };
+
   carregaExtrato() {
     this.setState({
       isLoading: true,
@@ -184,6 +196,7 @@ export default class Extrato extends React.Component {
           error={error}
           lancamentos={lancamentos}
           saldoAnterior={saldoAnterior}
+          deleteLancamento={this.deleteLancamento}
         />
       </div>
     );

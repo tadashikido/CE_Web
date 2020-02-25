@@ -71,3 +71,7 @@
   width: 30px;
   cursor: pointer;
 }
+
+.center {
+  margin: 0 auto !important;
+}

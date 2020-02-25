@@ -6,10 +6,6 @@ import { formatReal } from "../Utils";
 import "./ExtratoLancamentoItem.css";
 
 export default class ExtratoLancamento extends React.Component {
-  handlerDelete = id => {
-    console.log(id);
-  };
-
   getClassNameValor(valor) {
     let className = "valor ";
 
@@ -19,12 +15,12 @@ export default class ExtratoLancamento extends React.Component {
   }
 
   render() {
-    const lancamento = this.props.lancamento;
+    const { lancamento, handlerDelete, index } = this.props;
 
     return (
       <div className="linhas">
         <div className="actions">
-          <button onClick={() => this.handlerDelete(lancamento.id)}>
+          <button onClick={() => handlerDelete(index)}>
             <Delete className="ico" />
           </button>
         </div>

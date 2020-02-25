@@ -1,7 +1,7 @@
 import React from "react";
 
-import SaldoCarteiraList from "./SaldoCarteirasList";
 import SaldoTiposCarteiraList from "./SaldoTiposCarteiraList";
+import SaldoCarteiraList from "./SaldoCarteirasList";
 import UltimosLancamentos from "./UltimosLancamentos";
 import BarChart from "./BarChart";
 import DonutChart from "./DonutChart";
