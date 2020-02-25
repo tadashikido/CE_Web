@@ -3,6 +3,7 @@ import React from "react";
 import { getAuthentication } from "../Login/auth";
 import { API_PATH } from "../api";
 import Saldo from "./Saldo";
+
 export default class SaldoTiposCarteiraList extends React.Component {
   state = {
     saldosTipoCarteira: [],
