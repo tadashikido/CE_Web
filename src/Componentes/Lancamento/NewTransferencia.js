@@ -91,6 +91,22 @@ export default class NewTransferencia extends React.Component {
     } = this.props;
 
     e.preventDefault();
+
+    if (!valor) {
+      alert("Digite um valor maior que 0!");
+      return;
+    }
+
+    if (carteiraId === this.state.carteiraDestinoId) {
+      alert("Selecione uma carteira destino diferente da carteira de origem!");
+      return;
+    }
+
+    if (!obs) {
+      alert("Digite uma observação");
+      return;
+    }
+
     this.setState({
       erroSave: false,
       processing: true

@@ -99,6 +99,22 @@ export default class NewDespesa extends React.Component {
     } = this.props;
 
     e.preventDefault();
+
+    if (!valor) {
+      alert("Digite um valor maior que 0!");
+      return;
+    }
+
+    if (!this.state.fornecedorNome) {
+      alert("Selecione um fornecedor");
+      return;
+    }
+
+    if (!obs) {
+      alert("Digite uma observação");
+      return;
+    }
+
     this.setState({
       erroSave: false,
       processing: true
