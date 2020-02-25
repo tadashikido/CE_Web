@@ -1,11 +1,14 @@
 import React from "react";
+import { Delete } from "@material-ui/icons";
 
 import { formatReal } from "../Utils";
 
 import "./ExtratoLancamentoItem.css";
 
 export default class ExtratoLancamento extends React.Component {
-  state = {};
+  handlerDelete = id => {
+    console.log(id);
+  };
 
   getClassNameValor(valor) {
     let className = "valor ";
@@ -20,6 +23,11 @@ export default class ExtratoLancamento extends React.Component {
 
     return (
       <div className="linhas">
+        <div className="actions">
+          <button onClick={() => this.handlerDelete(lancamento.id)}>
+            <Delete className="ico" />
+          </button>
+        </div>
         <div className="origem">
           <div className="nome">
             {lancamento.nomeCliente ||
