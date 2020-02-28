@@ -5,7 +5,7 @@ import { AttachMoney, MoneyOff, CompareArrows } from "@material-ui/icons";
 import NewReceita from "./NewReceita";
 import NewDespesa from "./NewDespesa";
 import NewTransferencia from "./NewTransferencia";
-import { Creators as NewLancamentosActions } from "../../Store/ducks/newLancamento";
+import { Creators as NewLancamentosActions } from "../../Store/ducks/lancamento";
 
 import "./NewLancamento.css";
 

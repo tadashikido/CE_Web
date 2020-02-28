@@ -9,7 +9,7 @@ import { formatReal } from "../utils";
 import { API_PATH } from "../api";
 import { getAuthentication } from "../Login/auth";
 import processando from "../../static/loading.png";
-import { Creators as NewLancamentosActions } from "../../Store/ducks/newLancamento";
+import { Creators as NewLancamentosActions } from "../../Store/ducks/lancamento";
 
 class NewReceita extends React.Component {
   carregarCarteiras = () => {

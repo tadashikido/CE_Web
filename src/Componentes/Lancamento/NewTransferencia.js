@@ -7,7 +7,7 @@ import ptbr from "date-fns/locale/pt-BR";
 import { formatReal } from "../utils";
 import { API_PATH } from "../api";
 import { getAuthentication } from "../Login/auth";
-import { Creators as NewLancamentosActions } from "../../Store/ducks/newLancamento";
+import { Creators as NewLancamentosActions } from "../../Store/ducks/lancamento";
 
 import processando from "../../static/loading.png";
 
