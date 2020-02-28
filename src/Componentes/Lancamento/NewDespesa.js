@@ -1,9 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptbr from "date-fns/locale/pt-BR";
 import Creatable from "react-select/creatable";
 
-import { formatReal } from "../Utils";
+import { formatReal } from "../utils";
 import { API_PATH } from "../api";
 import { getAuthentication } from "../Login/auth";
 import processando from "../../static/loading.png";
@@ -99,6 +100,22 @@ export default class NewDespesa extends React.Component {
     } = this.props;
 
     e.preventDefault();
+
+    if (!valor) {
+      alert("Digite um valor maior que 0!");
+      return;
+    }
+
+    if (!this.state.fornecedorNome) {
+      alert("Selecione um fornecedor");
+      return;
+    }
+
+    if (!obs) {
+      alert("Digite uma observação");
+      return;
+    }
+
     this.setState({
       erroSave: false,
       processing: true

@@ -5,32 +5,48 @@
 @media (min-width: 800px) {
   .saldos-tipo-carteira,
   .saldos-carteira,
-  .ultimos-lancamentos {
+  .ultimos-lancamentos,
+  .container-chart {
     padding: 20px;
+  }
+
+  .container-chart {
+    float: left;
+    height: 300px;
+    width: 49.5%;
+  }
+
+  .chart2 {
+    float: right;
+    margin-left: 7px;
   }
 }
 
 @media (max-width: 800px) {
   .saldos-tipo-carteira,
   .saldos-carteira,
-  .ultimos-lancamentos {
+  .ultimos-lancamentos,
+  .container-chart {
     padding: 10px;
   }
 }
 
 .saldos-tipo-carteira,
 .saldos-carteira,
-.ultimos-lancamentos {
+.ultimos-lancamentos,
+.container-chart {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   border-radius: 2px;
 }
 
-.saldos-carteira {
+.saldos-carteira,
+.ultimos-lancamentos,
+.container-chart {
   margin-top: 10px;
 }
 
-.ultimos-lancamentos {
-  margin-top: 10px;
+.container-chart .apexcharts-canvas {
+  margin: 0 auto;
 }
 
 .titulo {
@@ -54,4 +70,8 @@
 .titulo .error {
   width: 30px;
   cursor: pointer;
+}
+
+.center {
+  margin: 0 auto !important;
 }

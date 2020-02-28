@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formatReal } from "../Utils";
+import { formatReal } from "../utils";
 
 import ExtratoLancamentoItem from "./ExtratoLancamentoItem";
 import ExtratoLancamentoData from "./ExtratoLancamentoData";
@@ -9,7 +9,13 @@ import "./ExtratoLancamentos.css";
 
 export default class ExtratoLancamentos extends React.Component {
   render() {
-    const { isLoading, error, lancamentos, saldoAnterior } = this.props;
+    const {
+      isLoading,
+      error,
+      lancamentos,
+      saldoAnterior,
+      deleteLancamento
+    } = this.props;
 
     if (isLoading)
       return (
@@ -55,7 +61,7 @@ export default class ExtratoLancamentos extends React.Component {
 
     return (
       <div className="lancamentos">
-        {lancamentos.map(lancamento => {
+        {lancamentos.map((lancamento, index) => {
           let component = [];
           lancamento.saldoAcumulado = saldoAcumulado;
           lancamento.dtMovim !== data &&
@@ -71,6 +77,8 @@ export default class ExtratoLancamentos extends React.Component {
             <ExtratoLancamentoItem
               key={lancamento.id}
               lancamento={lancamento}
+              index={index}
+              handlerDelete={deleteLancamento}
             />
           );
           data = lancamento.dtMovim;

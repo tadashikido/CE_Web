@@ -1,13 +1,17 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptbr from "date-fns/locale/pt-BR";
 
-import { formatReal } from "../Utils";
+import { formatReal } from "../utils";
 import { API_PATH } from "../api";
 import { getAuthentication } from "../Login/auth";
+import { Creators as NewLancamentosActions } from "../../Store/ducks/newLancamento";
+
 import processando from "../../static/loading.png";
 
-export default class NewTransferencia extends React.Component {
+class NewTransferencia extends React.Component {
   state = {
     carteirasDestino: [],
     carteiraDestinoId: 0,
@@ -91,6 +95,22 @@ export default class NewTransferencia extends React.Component {
     } = this.props;
 
     e.preventDefault();
+
+    if (!valor) {
+      alert("Digite um valor maior que 0!");
+      return;
+    }
+
+    if (carteiraId === this.state.carteiraDestinoId) {
+      alert("Selecione uma carteira destino diferente da carteira de origem!");
+      return;
+    }
+
+    if (!obs) {
+      alert("Digite uma observação");
+      return;
+    }
+
     this.setState({
       erroSave: false,
       processing: true
@@ -160,10 +180,6 @@ export default class NewTransferencia extends React.Component {
       dataMovimento,
       carteiraId,
       obs,
-      onChangeValor,
-      onChangeData,
-      onChangeCarteira,
-      onChangeObs,
       autoLancamentos,
       autoLancamentoId,
       onChangeAutoLan,
@@ -194,6 +210,14 @@ export default class NewTransferencia extends React.Component {
         </div>
       );
 
+    const {
+      handlerChangeAutoLan,
+      handlerChangeData,
+      handlerChangeValor,
+      handlerChangeCarteira,
+      handlerChangeObs
+    } = this.props;
+
     return (
       <form className="form-transferencia" onSubmit={this.handlerSubmit}>
         {this.state.save && (
@@ -209,7 +233,7 @@ export default class NewTransferencia extends React.Component {
             <label>Auto Lançamento: </label>
             <select
               className="input"
-              onChange={onChangeAutoLan}
+              onChange={e => handlerChangeAutoLan(e.target.value)}
               value={autoLancamentoId}
             >
               {autoLancamentos.map(autoLan => (
@@ -227,7 +251,7 @@ export default class NewTransferencia extends React.Component {
             className="input input-data"
             locale="pt-BR"
             selected={dataMovimento}
-            onChange={onChangeData}
+            onChange={date => handlerChangeData(date)}
             dateFormat="dd/MM/yyyy"
           />
         </div>
@@ -239,7 +263,7 @@ export default class NewTransferencia extends React.Component {
               className="input input-valor"
               type="text"
               value={valor}
-              onChange={onChangeValor}
+              onChange={e => handlerChangeValor(e.target.value)}
               onBlur={this.toggleValorEditing}
             />
           ) : (
@@ -257,7 +281,7 @@ export default class NewTransferencia extends React.Component {
           <label>Carteira Origem: </label>
           <select
             className="input"
-            onChange={onChangeCarteira}
+            onChange={e => handlerChangeCarteira(e.target.value)}
             value={carteiraId}
           >
             {carteiras.map(carteira => (
@@ -289,7 +313,7 @@ export default class NewTransferencia extends React.Component {
             className="input"
             type="text"
             value={obs}
-            onChange={onChangeObs}
+            onChange={e => handlerChangeObs(e.target.value)}
           />
         </div>
 
@@ -298,3 +322,13 @@ export default class NewTransferencia extends React.Component {
     );
   }
 }
+
+NewLancamentosActions;
+const masStateToProps = state => ({
+  params: state
+});
+
+const masDispatchToProps = dispatch =>
+  bindActionCreators(NewLancamentosActions, dispatch);
+
+export default connect(masStateToProps, masDispatchToProps)(NewTransferencia);

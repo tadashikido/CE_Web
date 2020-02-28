@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formatReal } from "../Utils";
+import { formatReal } from "../utils";
 
 import "./Lancamento.css";
 
@@ -13,7 +13,7 @@ export default class Lancamento extends React.Component {
     return (
       <div className="movimento">
         <div className="descricao">
-        <div className="nome">
+          <div className="nome">
             {lancamento.nomeCliente ||
               lancamento.razaoSocial ||
               "TRANSFERÊNCIA"}
