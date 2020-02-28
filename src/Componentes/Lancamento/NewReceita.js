@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ptbr from "date-fns/locale/pt-BR";
 import Creatable from "react-select/creatable";
@@ -8,88 +9,119 @@ import { formatReal } from "../utils";
 import { API_PATH } from "../api";
 import { getAuthentication } from "../Login/auth";
 import processando from "../../static/loading.png";
+import { Creators as NewLancamentosActions } from "../../Store/ducks/newLancamento";
 
-import { Creators } from "../../Store/ducks/newLancamento";
+class NewReceita extends React.Component {
+  carregarCarteiras = () => {
+    const {
+      setProcessing,
+      setProcessed,
+      setProcessErro,
+      loadCarteiras
+    } = this.props;
 
-export default class NewReceita extends React.Component {
-  state = {
-    servicos: [],
-    servicoId: 0,
-    clientes: [],
-    clienteNome: "",
-    clienteId: 0,
-    valorEditing: false,
-    processing: false,
-    erroSave: false,
-    save: false
+    setProcessing();
+    fetch(API_PATH + "/api/carteiras?res=ENTRADAS", {
+      method: "GET",
+      headers: getAuthentication()
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.message) {
+          throw res.message;
+        }
+        loadCarteiras(res);
+      })
+      .catch(() => {
+        setProcessErro();
+      })
+      .finally(() => {
+        setProcessed();
+      });
+  };
+
+  carregarAutosLancamentos = () => {
+    const {
+      setProcessing,
+      setProcessed,
+      setProcessErro,
+      loadAutoLancamentos
+    } = this.props;
+
+    setProcessing();
+    fetch(API_PATH + "/api/autoLancamentos", {
+      method: "GET",
+      headers: getAuthentication()
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.message) {
+          throw res.message;
+        }
+        loadAutoLancamentos(res);
+      })
+      .catch(() => {
+        setProcessErro();
+      })
+      .finally(() => {
+        setProcessed();
+      });
   };
 
   carregarServicos = () => {
-    this.setState({
-      processing: true
-    });
+    const {
+      setProcessing,
+      setProcessed,
+      setProcessErro,
+      loadServicos
+    } = this.props;
+
+    setProcessing();
     fetch(API_PATH + "/api/servicos", {
       method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
       .then(res => {
-        if (!res.message) {
-          this.setState({
-            servicos: res,
-            servicoId: res.length > 0 ? res[0].id : 0
-          });
+        if (res.message) {
+          throw res.message;
         }
+        loadServicos(res);
       })
-      .catch(() => {})
+      .catch(() => {
+        setProcessErro();
+      })
       .finally(() => {
-        this.setState({
-          processing: false
-        });
+        setProcessed();
       });
   };
 
   carregarClientes = () => {
-    this.setState({
-      processing: true
-    });
+    const {
+      setProcessing,
+      setProcessed,
+      setProcessErro,
+      loadClientes
+    } = this.props;
+
+    setProcessing();
     fetch(API_PATH + "/api/clientes", {
       method: "GET",
       headers: getAuthentication()
     })
       .then(res => res.json())
       .then(res => {
-        if (!res.message) {
-          this.setState({
-            clientes: res
-          });
+        if (res.message) {
+          throw res.message;
         }
+        loadClientes(res);
       })
-      .catch(() => {})
+      .catch(() => {
+        setProcessErro();
+      })
       .finally(() => {
-        this.setState({
-          processing: false
-        });
+        setProcessed();
       });
-  };
-
-  onChangeCliente = value => {
-    this.setState({
-      clienteId: value.id,
-      clienteNome: value.nome.toUpperCase()
-    });
-  };
-
-  onChangeServico = e => {
-    this.setState({
-      servicoId: e.target.value
-    });
-  };
-
-  toggleValorEditing = () => {
-    this.setState({
-      valorEditing: !this.state.valorEditing
-    });
   };
 
   handlerSubmit = e => {
@@ -98,7 +130,15 @@ export default class NewReceita extends React.Component {
       dataMovimento,
       carteiraId,
       obs,
-      autoLancamentoId
+      autoLancamentoId,
+      clienteNome,
+      clienteId,
+      servicoId,
+
+      setProcessing,
+      setSuccessSave,
+      setErrorSave,
+      setRemoveSuccess
     } = this.props;
 
     e.preventDefault();
@@ -108,7 +148,7 @@ export default class NewReceita extends React.Component {
       return;
     }
 
-    if (!this.state.clienteNome) {
+    if (!clienteNome) {
       alert("Selecione um cliente");
       return;
     }
@@ -118,10 +158,7 @@ export default class NewReceita extends React.Component {
       return;
     }
 
-    this.setState({
-      erroSave: false,
-      processing: true
-    });
+    setProcessing();
     fetch(
       API_PATH +
         "/api/recebimento?" +
@@ -129,10 +166,10 @@ export default class NewReceita extends React.Component {
         autoLancamentoId +
         "&" +
         "clienteId=" +
-        this.state.clienteId +
+        clienteId +
         "&" +
         "clienteNome=" +
-        this.state.clienteNome +
+        clienteNome +
         "&" +
         "data=" +
         dataMovimento.toISOString() +
@@ -144,7 +181,7 @@ export default class NewReceita extends React.Component {
         carteiraId +
         "&" +
         "servicoId=" +
-        this.state.servicoId +
+        servicoId +
         "&" +
         "observacao=" +
         obs,
@@ -156,29 +193,15 @@ export default class NewReceita extends React.Component {
       .then(res => res.json())
       .then(res => {
         if (res.message) {
-          this.setState({
-            erroSave: true
-          });
-        } else {
-          this.setState({
-            save: true
-          });
-          setTimeout(() => {
-            this.setState({
-              save: false
-            });
-          }, 3000);
+          throw res.message;
         }
+        setSuccessSave();
+        setTimeout(() => {
+          setRemoveSuccess();
+        }, 3000);
       })
       .catch(() => {
-        this.setState({
-          erroSave: true
-        });
-      })
-      .finally(() => {
-        this.setState({
-          processing: false
-        });
+        setErrorSave();
       });
   };
 
@@ -189,19 +212,34 @@ export default class NewReceita extends React.Component {
 
   render() {
     const {
+      clientes,
       carteiras,
-      valor,
-      dataMovimento,
-      carteiraId,
-      obs,
-      onChangeValor,
-      onChangeData,
-      onChangeCarteira,
-      onChangeObs,
       autoLancamentos,
+      servicos,
+
       autoLancamentoId,
-      onChangeAutoLan,
-      error
+      dataMovimento,
+      valor,
+      carteiraId,
+      servicoId,
+      obs,
+
+      error,
+
+      processing,
+      erroSave,
+      successSave,
+      valorEditing,
+
+      handlerChangeValor,
+      handlerChangeData,
+      handlerChangeCarteira,
+      handlerChangeObs,
+      handlerChangeAutoLan,
+
+      handlerChangeCliente,
+      handlerChangeServico,
+      toggleValorEditing
     } = this.props;
 
     registerLocale("pt-BR", ptbr);
@@ -219,7 +257,7 @@ export default class NewReceita extends React.Component {
         </div>
       );
 
-    if (this.state.processing)
+    if (processing)
       return (
         <div className="processing">
           <img className="img" alt="processando" src={processando}></img>
@@ -230,20 +268,22 @@ export default class NewReceita extends React.Component {
 
     return (
       <form className="form-receita" onSubmit={this.handlerSubmit}>
-        {this.state.save && (
+        {successSave && (
           <div className="save-box save-success"> Salvo com sucesso! </div>
         )}
-        {this.state.erroSave && (
+
+        {erroSave && (
           <div className="save-box save-fail">
             Erro ao salvar, tente novamente!
           </div>
         )}
+
         {autoLancamentos.length !== 1 && (
           <div className="control">
             <label>Auto Lançamento: </label>
             <select
               className="input"
-              onChange={onChangeAutoLan}
+              onChange={e => handlerChangeAutoLan(e.target.value)}
               value={autoLancamentoId}
             >
               {autoLancamentos.map(autoLan => (
@@ -259,10 +299,10 @@ export default class NewReceita extends React.Component {
           <label>Cliente: </label>
           <Creatable
             classNamePrefix="input-creatable"
-            options={this.state.clientes}
+            options={clientes}
             getOptionValue={({ id }) => id}
             getOptionLabel={({ nome }) => nome}
-            onChange={this.onChangeCliente}
+            onChange={c => handlerChangeCliente(c.id, c.nome)}
             getNewOptionData={inputValue => ({
               id: "0",
               nome: inputValue.toUpperCase()
@@ -276,27 +316,27 @@ export default class NewReceita extends React.Component {
             className="input input-data"
             locale="pt-BR"
             selected={dataMovimento}
-            onChange={onChangeData}
+            onChange={data => handlerChangeData(data)}
             dateFormat="dd/MM/yyyy"
           />
         </div>
 
         <div className="control">
           <label>Valor: </label>
-          {this.state.valorEditing ? (
+          {valorEditing ? (
             <input
               className="input input-valor"
               type="text"
               value={valor}
-              onChange={onChangeValor}
-              onBlur={this.toggleValorEditing}
+              onChange={e => handlerChangeValor(e.target.value)}
+              onBlur={() => toggleValorEditing()}
             />
           ) : (
             <input
               className="input input-valor"
               type="text"
               value={formatReal(valor)}
-              onFocus={this.toggleValorEditing}
+              onFocus={() => toggleValorEditing()}
               readOnly
             />
           )}
@@ -306,7 +346,7 @@ export default class NewReceita extends React.Component {
           <label>Carteira: </label>
           <select
             className="input"
-            onChange={onChangeCarteira}
+            onChange={e => handlerChangeCarteira(e.target.value)}
             value={carteiraId}
           >
             {carteiras.map(carteira => (
@@ -321,10 +361,10 @@ export default class NewReceita extends React.Component {
           <label>Serviço: </label>
           <select
             className="input"
-            onChange={this.onChangeServico}
-            value={this.state.servicoId}
+            onChange={e => handlerChangeServico(e.target.value)}
+            value={servicoId}
           >
-            {this.state.servicos.map(servico => (
+            {servicos.map(servico => (
               <option key={servico.id} value={servico.id}>
                 {servico.descricao}
               </option>
@@ -338,7 +378,7 @@ export default class NewReceita extends React.Component {
             className="input"
             type="text"
             value={obs}
-            onChange={onChangeObs}
+            onChange={e => handlerChangeObs(e.target.value)}
           />
         </div>
 
@@ -347,3 +387,31 @@ export default class NewReceita extends React.Component {
     );
   }
 }
+
+const mapStateToProps = ({ newLancamento }) => ({
+  clientes: newLancamento.clientes,
+  carteiras: newLancamento.carteiras,
+  autoLancamentos: newLancamento.autoLancamentos,
+  servicos: newLancamento.servicos,
+
+  clienteNome: newLancamento.clienteNome,
+  clienteId: newLancamento.clienteId,
+  autoLancamentoId: newLancamento.autoLancamentoId,
+  dataMovimento: newLancamento.dataMovimento,
+  valor: newLancamento.valor,
+  carteiraId: newLancamento.carteiraId,
+  servicoId: newLancamento.servicoId,
+  obs: newLancamento.obs,
+
+  error: newLancamento.error,
+  valorEditing: newLancamento.valorEditing,
+
+  processing: newLancamento.processing,
+  erroSave: newLancamento.erroSave,
+  successSave: newLancamento.successSave
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(NewLancamentosActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewReceita);
