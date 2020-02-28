@@ -2,12 +2,12 @@
   display: grid;
   grid-template-columns: auto 80px;
   grid-template-areas:
-    'nome valor'
-    'obs valor';
-    grid-gap: 3px;
-    margin-bottom: 8px;
-    transition: all .3s;
-    cursor: pointer;
+    "nome valor"
+    "obs valor";
+  grid-gap: 3px;
+  margin-bottom: 8px;
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
 .linhas:hover {
@@ -15,9 +15,15 @@
   padding: 5px;
 }
 
-.linhas .origem .nome { grid-area: nome; }
-.linhas .origem .obs { grid-area: obs; }
-.linhas .valor { grid-area: valor; }
+.linhas .origem .nome {
+  grid-area: nome;
+}
+.linhas .origem .obs {
+  grid-area: obs;
+}
+.linhas .valor {
+  grid-area: valor;
+}
 
 .linhas .origem {
   font-size: 11px;
