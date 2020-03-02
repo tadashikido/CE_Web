@@ -117,8 +117,10 @@
   border: none;
   border-bottom: 1px solid #f0f0f0;
   color: #9c9c9c;
-  height: 18px;
+  height: 25px;
+  font-size: 15px;
   background-color: transparent;
+  padding: 3px;
 }
 
 .new-lancamento .form-receita .control .input,
