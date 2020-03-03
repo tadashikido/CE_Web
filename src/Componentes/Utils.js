@@ -1,8 +1,6 @@
-const formatReal = valor => parseFloat(valor.toString().replace(",", ".")).toFixed(2).replace(".", ",");
+const formatReal = valor => isNaN(valor) ? 0 : parseFloat(valor.toString().replace(",", ".")).toFixed(2).replace(".", ",");
 
-const formatData = data => {
-  return data.toString();
-};
+const formatData = data => data.toString();
 
 const getMonthAbrev = function(data) {
   var locale = "pt-br",

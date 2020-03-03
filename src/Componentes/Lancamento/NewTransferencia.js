@@ -219,7 +219,8 @@ class NewTransferencia extends React.Component {
           {valorEditing ? (
             <input
               className="input input-valor"
-              type="text"
+              type="number"
+              pattern="[0-9,]*"
               value={valor}
               onChange={e => handlerChangeValor(e.target.value)}
               onBlur={() => toggleValorEditing()}
