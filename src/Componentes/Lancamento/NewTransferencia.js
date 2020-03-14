@@ -269,24 +269,24 @@ class NewTransferencia extends React.Component {
   }
 }
 
-const masStateToProps = ({ newLancamento }) => ({
-  carteiras: newLancamento.carteiras,
-  carteirasDestino: newLancamento.carteirasDestino,
-  autoLancamentos: newLancamento.autoLancamentos,
+const masStateToProps = ({ lancamento }) => ({
+  carteiras: lancamento.carteiras,
+  carteirasDestino: lancamento.carteirasDestino,
+  autoLancamentos: lancamento.autoLancamentos,
 
-  autoLancamentoId: newLancamento.autoLancamentoId,
-  dataMovimento: newLancamento.dataMovimento,
-  valor: newLancamento.valor,
-  carteiraId: newLancamento.carteiraId,
-  carteiraDestinoId: newLancamento.carteiraDestinoId,
-  obs: newLancamento.obs,
+  autoLancamentoId: lancamento.autoLancamentoId,
+  dataMovimento: lancamento.dataMovimento,
+  valor: lancamento.valor,
+  carteiraId: lancamento.carteiraId,
+  carteiraDestinoId: lancamento.carteiraDestinoId,
+  obs: lancamento.obs,
 
-  error: newLancamento.error,
-  valorEditing: newLancamento.valorEditing,
+  error: lancamento.error,
+  valorEditing: lancamento.valorEditing,
 
-  processing: newLancamento.processing,
-  erroSave: newLancamento.erroSave,
-  successSave: newLancamento.successSave
+  processing: lancamento.processing,
+  erroSave: lancamento.erroSave,
+  successSave: lancamento.successSave
 });
 
 const masDispatchToProps = dispatch =>

@@ -376,27 +376,27 @@ class NewReceita extends React.Component {
   }
 }
 
-const mapStateToProps = ({ newLancamento }) => ({
-  clientes: newLancamento.clientes,
-  carteiras: newLancamento.carteiras,
-  autoLancamentos: newLancamento.autoLancamentos,
-  servicos: newLancamento.servicos,
+const mapStateToProps = ({ lancamento }) => ({
+  clientes: lancamento.clientes,
+  carteiras: lancamento.carteiras,
+  autoLancamentos: lancamento.autoLancamentos,
+  servicos: lancamento.servicos,
 
-  clienteNome: newLancamento.clienteNome,
-  clienteId: newLancamento.clienteId,
-  autoLancamentoId: newLancamento.autoLancamentoId,
-  dataMovimento: newLancamento.dataMovimento,
-  valor: newLancamento.valor,
-  carteiraId: newLancamento.carteiraId,
-  servicoId: newLancamento.servicoId,
-  obs: newLancamento.obs,
+  clienteNome: lancamento.clienteNome,
+  clienteId: lancamento.clienteId,
+  autoLancamentoId: lancamento.autoLancamentoId,
+  dataMovimento: lancamento.dataMovimento,
+  valor: lancamento.valor,
+  carteiraId: lancamento.carteiraId,
+  servicoId: lancamento.servicoId,
+  obs: lancamento.obs,
 
-  error: newLancamento.error,
-  valorEditing: newLancamento.valorEditing,
+  error: lancamento.error,
+  valorEditing: lancamento.valorEditing,
 
-  processing: newLancamento.processing,
-  erroSave: newLancamento.erroSave,
-  successSave: newLancamento.successSave
+  processing: lancamento.processing,
+  erroSave: lancamento.erroSave,
+  successSave: lancamento.successSave
 });
 
 const mapDispatchToProps = dispatch =>

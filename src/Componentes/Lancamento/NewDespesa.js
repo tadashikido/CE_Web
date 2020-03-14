@@ -378,27 +378,27 @@ class NewDespesa extends React.Component {
   }
 }
 
-const mapStateToProps = ({ newLancamento }) => ({
-  fornecedores: newLancamento.fornecedores,
-  carteiras: newLancamento.carteiras,
-  autoLancamentos: newLancamento.autoLancamentos,
-  contasContabeis: newLancamento.contasContabeis,
+const mapStateToProps = ({ lancamento }) => ({
+  fornecedores: lancamento.fornecedores,
+  carteiras: lancamento.carteiras,
+  autoLancamentos: lancamento.autoLancamentos,
+  contasContabeis: lancamento.contasContabeis,
 
-  fornecedorNome: newLancamento.fornecedorNome,
-  fornecedorId: newLancamento.fornecedorId,
-  autoLancamentoId: newLancamento.autoLancamentoId,
-  dataMovimento: newLancamento.dataMovimento,
-  valor: newLancamento.valor,
-  carteiraId: newLancamento.carteiraId,
-  contaContabilId: newLancamento.contaContabilId,
-  obs: newLancamento.obs,
+  fornecedorNome: lancamento.fornecedorNome,
+  fornecedorId: lancamento.fornecedorId,
+  autoLancamentoId: lancamento.autoLancamentoId,
+  dataMovimento: lancamento.dataMovimento,
+  valor: lancamento.valor,
+  carteiraId: lancamento.carteiraId,
+  contaContabilId: lancamento.contaContabilId,
+  obs: lancamento.obs,
 
-  error: newLancamento.error,
-  valorEditing: newLancamento.valorEditing,
+  error: lancamento.error,
+  valorEditing: lancamento.valorEditing,
 
-  processing: newLancamento.processing,
-  erroSave: newLancamento.erroSave,
-  successSave: newLancamento.successSave
+  processing: lancamento.processing,
+  erroSave: lancamento.erroSave,
+  successSave: lancamento.successSave
 });
 
 const mapDispatchToProps = dispatch =>

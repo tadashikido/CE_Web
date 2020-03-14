@@ -70,12 +70,12 @@ function NewLancamento({
   );
 }
 
-const mapStateToProps = ({ newLancamento }) => ({
-  receita: newLancamento.receita,
-  despesa: newLancamento.despesa,
-  transferencia: newLancamento.transferencia,
-  valor: newLancamento.valor,
-  exibeTeclado: newLancamento.exibeTeclado
+const mapStateToProps = ({ lancamento }) => ({
+  receita: lancamento.receita,
+  despesa: lancamento.despesa,
+  transferencia: lancamento.transferencia,
+  valor: lancamento.valor,
+  exibeTeclado: lancamento.exibeTeclado
 });
 
 const mapDispatchToProps = dispatch => ({
