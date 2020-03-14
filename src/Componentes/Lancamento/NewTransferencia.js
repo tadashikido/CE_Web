@@ -138,16 +138,14 @@ class NewTransferencia extends React.Component {
       processing,
       erroSave,
       successSave,
-      valorEditing,
 
-      handlerChangeValor,
       handlerChangeData,
       handlerChangeCarteira,
       handlerChangeCarteiraDestino,
       handlerChangeObs,
       handlerChangeAutoLan,
 
-      toggleValorEditing
+      toggleExibeTeclado
     } = this.props;
 
     registerLocale("pt-BR", ptbr);
@@ -216,24 +214,13 @@ class NewTransferencia extends React.Component {
 
         <div className="control">
           <label>Valor: </label>
-          {valorEditing ? (
-            <input
-              className="input input-valor"
-              type="number"
-              pattern="[0-9,]*"
-              value={valor}
-              onChange={e => handlerChangeValor(e.target.value)}
-              onBlur={() => toggleValorEditing()}
-            />
-          ) : (
-            <input
-              className="input input-valor"
-              type="text"
-              value={formatReal(valor)}
-              onFocus={() => toggleValorEditing()}
-              readOnly
-            />
-          )}
+          <input
+            className="input input-valor"
+            type="text"
+            value={formatReal(valor)}
+            onFocus={() => toggleExibeTeclado()}
+            readOnly
+          />
         </div>
 
         <div className="control">

@@ -22,7 +22,7 @@ export const Types = {
   CARTEIRA_DESTINO_CHANGE: "lancamento/CARTEIRA_DESTINO_CHANGE",
   SERVICO_CHANGE: "lancamento/SERVICO_CHANGE",
 
-  TOGGLE_VALOR_EDITING: "lancamento/TOGGLE_VALOR_EDITING",
+  TOGGLE_EXIBE_TECLADO: "lancamento/TOGGLE_EXIBE_TECLADO",
 
   PROCESSING: "lancamento/PROCESSING",
   PROCESSED: "lancamento/PROCESSED",
@@ -60,7 +60,7 @@ const INITIAL_STATE = {
   carteirasDestino: [],
   carteiraDestinoId: 0,
 
-  valorEditing: false,
+  exibeTeclado: false,
 
   processing: false,
   erroSave: false,
@@ -162,6 +162,7 @@ export default function newLancamento(state = INITIAL_STATE, action) {
       return { ...state, successSave: false };
 
     case Types.VALOR_CHANGE:
+      console.log(action.valor);
       return { ...state, valor: action.valor };
 
     case Types.DATA_CHANGE:
@@ -211,10 +212,10 @@ export default function newLancamento(state = INITIAL_STATE, action) {
         servicoId: action.servicoId
       };
 
-    case Types.TOGGLE_VALOR_EDITING:
+    case Types.TOGGLE_EXIBE_TECLADO:
       return {
         ...state,
-        valorEditing: !state.valorEditing
+        exibeTeclado: !state.exibeTeclado
       };
     default:
       return state;
@@ -367,9 +368,9 @@ export const Creators = {
     };
   },
 
-  toggleValorEditing: () => {
+  toggleExibeTeclado: () => {
     return {
-      type: Types.TOGGLE_VALOR_EDITING
+      type: Types.TOGGLE_EXIBE_TECLADO
     };
   },
 

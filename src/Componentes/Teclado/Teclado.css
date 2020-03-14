@@ -1,0 +1,58 @@
+.teclado-fundo {
+  position: fixed;
+  background-color: #000;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.7;
+  z-index: 999;
+}
+
+.teclado-container {
+  position: fixed;
+  padding: 10px;
+  width: 300px;
+  margin-left: -150px;
+  left: 50%;
+  background: #f0f0f0;
+  top: 100px;
+  z-index: 1000;
+}
+
+.teclado-container .display {
+  background: #f0f0f0;
+  text-align: right;
+  margin: 3px;
+  font-size: 25px;
+  padding: 5px;
+  font-weight: 600;
+  border: 1px solid #cfcfcf;
+  overflow: hidden;
+  margin-bottom: 15px;
+  height: 50px;
+}
+
+.teclado-container .linha {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.teclado-container .linha .tecla {
+  margin: 2px;
+  padding: 12px;
+  font-size: 20px;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, #ffffff),
+    color-stop(100%, #e5e5e5)
+  );
+  box-shadow: 0px 1px 3px #000000;
+  color: #333;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
