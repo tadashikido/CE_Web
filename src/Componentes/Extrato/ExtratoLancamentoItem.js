@@ -1,7 +1,7 @@
 import React from "react";
 import { Delete } from "@material-ui/icons";
 
-import { formatReal } from "../utils";
+import { formatReal } from "../Utils";
 
 import "./ExtratoLancamentoItem.css";
 

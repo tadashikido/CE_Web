@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formatReal } from "../utils";
+import { formatReal } from "../Utils";
 
 import "./Saldo.css";
 

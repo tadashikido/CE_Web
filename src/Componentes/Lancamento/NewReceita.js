@@ -5,7 +5,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import ptbr from "date-fns/locale/pt-BR";
 import Creatable from "react-select/creatable";
 
-import { formatReal } from "../utils";
+import { formatReal } from "../Utils";
 import { API_PATH } from "../api";
 import { getAuthentication } from "../Login/auth";
 import processando from "../../static/loading.png";
